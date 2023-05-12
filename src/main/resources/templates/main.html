@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+</head>
+<body>
+    회원 정보: <p th:text="${session.loginEmail}"></p>
+    <a href="/logout">로그아웃</a>
+    <a href="/select/patient">환자 정보 조회</a>
+    <a href="/insert">환자 상태 입력</a>
+    <a href="/select/data">통계 페이지</a>
+
+
+</body>
+</html>
