@@ -31,7 +31,7 @@ public class MemberService {
         Optional<MemberEntity> byId = memberRepository.findById(memberDTO.getId());
         if (byId.isPresent()) {
             // 조회 결과가 있다(해당 이메일을 가진 회원 정보가 있다)
-            MemberEntity memberEntity = byId.get();
+            MemberEntity memberEntity = byId.get();//해당 회원의 정보를 엔티티에 저장
             if (memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())) {
                 // 비밀번호 일치
                 // entity -> dto 변환 후 리턴

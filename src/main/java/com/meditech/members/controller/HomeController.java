@@ -31,6 +31,7 @@ public class HomeController {
         if (loginResult != null) {
             // login 성공
             session.setAttribute("loginId", loginResult.getId());//로그인한 id 정보를 세션 저장
+            session.setAttribute("loginName", loginResult.getMemberName());
             return "main";
         } else {
             // login 실패
