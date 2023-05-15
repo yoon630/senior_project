@@ -1,11 +1,18 @@
 package com.meditech.members.service;
 
 import com.meditech.members.dto.MemberDTO;
+import com.meditech.members.dto.PatientDTO;//나중에 PatientService만들어서 옮겨도 됨
 import com.meditech.members.entity.MemberEntity;
+import com.meditech.members.entity.PatientEntity;
 import com.meditech.members.repository.MemberRepository;
+import com.meditech.members.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,10 +28,10 @@ public class MemberService {
             1. 회원이 입력한 이메일로 DB에서 조회를 함
             2. DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단
          */
-        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
-        if (byMemberEmail.isPresent()) {
+        Optional<MemberEntity> byId = memberRepository.findById(memberDTO.getId());
+        if (byId.isPresent()) {
             // 조회 결과가 있다(해당 이메일을 가진 회원 정보가 있다)
-            MemberEntity memberEntity = byMemberEmail.get();
+            MemberEntity memberEntity = byId.get();
             if (memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())) {
                 // 비밀번호 일치
                 // entity -> dto 변환 후 리턴
@@ -40,4 +47,14 @@ public class MemberService {
         }
     }
 
+    private final PatientRepository patientRepository;
+    public List<PatientDTO> findAll(HttpSession session){
+        Long Id = (Long) session.getAttribute("loginId");
+        List<PatientEntity> patientEntityList = patientRepository.findByMemberEntity_Id(Id);
+        List<PatientDTO> patientDTOList = new ArrayList<>();
+        for(PatientEntity patientEntity: patientEntityList){//여러개의 entity를 여러개의 dto로 하나씩 담기위해
+            patientDTOList.add(PatientDTO.toPatientDTO(patientEntity));
+        }
+        return patientDTOList;
+    }
 }

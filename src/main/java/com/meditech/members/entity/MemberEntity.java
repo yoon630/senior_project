@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name = "member_table")
-public class MemberEntity {
+public class MemberEntity {//의사 엔티티
     @Id //pk지정
     @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_increment
     private Long id;
