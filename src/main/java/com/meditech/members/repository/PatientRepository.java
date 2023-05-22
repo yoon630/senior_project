@@ -12,4 +12,5 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
     //Optional<PatientEntity> findByMemberIdAndMember_Id(MemberEntity memberEntity, Long id);
     //이거 memberId랑 세션에 저장된 id을 비교하게 되어있는데, 나중에 바꾸기
     List<PatientEntity> findByMemberEntity_Id(Long id);
+    Optional<PatientEntity> findById(Long id);
 }

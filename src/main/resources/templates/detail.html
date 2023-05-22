@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>detail</title>
+</head>
+<body>
+<table>
+  <tr>
+    <th>id</th>
+    <th>방문회차</th>
+    <th>방문날짜</th>
+    <th>state</th>
+    <th>action</th>
+    <th>reward</th>
+    <th>혈액검사수치</th>
+    <th>심전도수치</th>
+    <th>혈압</th>
+    <th>x-ray</th>
+    <th>초음파</th>
+  </tr>
+  <tr th:each="patient: ${patientRecordList}"><!--controller에서 model에 담긴 attributeName-->
+    <td th:text="${patient.patientId}"></td><!--위에서 지정한 변수이름인 patient.필드이름(DTO에서 지정해준)-->
+    <td th:text="${patient.turn}"></td>
+    <td th:text="${patient.visitDate}"></td>
+    <td th:text="${patient.state}"></td>
+    <td th:text="${patient.action}"></td>
+    <td th:text="${patient.reward}"></td>
+    <td th:text="${patient.blood}"></td>
+    <td th:text="${patient.ECG}"></td>
+    <td th:text="${patient.bloodPressure}"></td>
+    <td><img th:src="@{${'data:image/png;base64,' + patient.xRay}}" alt="X-Ray"></td>
+    <td><img th:src="@{${'data:image/png;base64,' + patient.ultraSound}}" alt="UltraSound"></td>
+  </tr>
+</table>
+</body>
+</html>

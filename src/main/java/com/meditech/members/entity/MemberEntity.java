@@ -14,11 +14,7 @@ import javax.persistence.*;
 @Table(name = "member_table")
 public class MemberEntity {//의사 엔티티
     @Id //pk지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_increment
     private Long id;
-
-    @Column(unique = true, name = "memberEmail")//unique 제약 조건 추가
-    private String memberEmail;
 
     @Column(name = "memberPassword")
     private String memberPassword;
@@ -28,7 +24,7 @@ public class MemberEntity {//의사 엔티티
 
     public static MemberEntity toMemberEntity(MemberDTO memberDTO) {//dto객체->entity객체로 변환
         MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setMemberEmail(memberDTO.getMemberEmail());
+        memberEntity.setId(memberDTO.getId());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
         memberEntity.setMemberName(memberDTO.getMemberName());
         return memberEntity;

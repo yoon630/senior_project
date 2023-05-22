@@ -2,9 +2,12 @@ package com.meditech.members.service;
 
 import com.meditech.members.dto.MemberDTO;
 import com.meditech.members.dto.PatientDTO;//나중에 PatientService만들어서 옮겨도 됨
+import com.meditech.members.dto.PatientRecordDTO;
 import com.meditech.members.entity.MemberEntity;
 import com.meditech.members.entity.PatientEntity;
+import com.meditech.members.entity.PatientRecordEntity;
 import com.meditech.members.repository.MemberRepository;
+import com.meditech.members.repository.PatientRecordRepository;
 import com.meditech.members.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,5 +59,15 @@ public class MemberService {
             patientDTOList.add(PatientDTO.toPatientDTO(patientEntity));
         }
         return patientDTOList;
+    }
+
+    private final PatientRecordRepository patientRecordRepository;
+    public List<PatientRecordDTO> findDetail(Long id) {
+        List<PatientRecordEntity> patientRecordEntityList = patientRecordRepository.findByIdPatientEntityId(id);
+        List<PatientRecordDTO> patientRecordDTOList = new ArrayList<>();
+        for(PatientRecordEntity patientRecordEntity: patientRecordEntityList){
+            patientRecordDTOList.add(PatientRecordDTO.toPatientRecordDTO(patientRecordEntity));
+        }
+        return patientRecordDTOList;
     }
 }

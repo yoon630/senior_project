@@ -15,7 +15,6 @@ import javax.persistence.*;
 @Table(name = "patient_table")
 public class PatientEntity {
     @Id //pk지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//auto_increment
     private Long id;
 
     @Column(name = "patientName")
@@ -33,13 +32,13 @@ public class PatientEntity {
 
     public static PatientEntity toPatientEntity(PatientDTO patientDTO, MemberRepository memberRepository) {//dto객체->entity객체로 변환
         PatientEntity patientEntity = new PatientEntity();
+        patientEntity.setId(patientDTO.getId());
         patientEntity.setPatientName(patientDTO.getPatientName());
         patientEntity.setPatientAge(patientDTO.getPatientAge());
         patientEntity.setPatientGender(patientDTO.getPatientGender());
         Long memberId = patientDTO.getMemberId();
         MemberEntity memberEntity = memberRepository.findById(memberId).orElse(null);
         patientEntity.setMemberEntity(memberEntity);
-        //patientEntity.setMemberEntity(patientDTO.getMemberId());
         return patientEntity;
     }
 }

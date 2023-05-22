@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> <!--안씀;;-->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
@@ -20,12 +20,12 @@
     <td th:text="${patient.patientName}"></td>
     <td th:text="${patient.patientAge}"></td>
     <td th:text="${patient.patientGender}"></td>
-    <!--<td>
-       query string /member?id=1
-          rest api /member/1
-      <a th:href="@{|/member/${member.id}|}">조회</a>//조회기능
-    </td>
     <td>
+       <!--query string /member?id=1
+          rest api /member/1-->
+      <a th:href="@{|/select/patient/${patient.id}|}">조회</a>
+    </td>
+    <!--<td>
       <a th:href="@{|/member/delete/${member.id}|}">삭제</a>//삭제기능
     </td> -->
   </tr>
