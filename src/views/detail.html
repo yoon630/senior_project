@@ -15,7 +15,6 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
       rel="stylesheet"
     />
-
     <!-- CSS Files -->
     <link rel="stylesheet" href="/src/css/main.css" />
   </head>
@@ -189,8 +188,8 @@
           <a
             class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             href="../index.html"
-            >환자 조회</a
-          >
+            >환자 진료 상세내역
+          </a>
           <!-- Form -->
           <form
             class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"
@@ -270,21 +269,27 @@
           <div class="col">
             <div class="card shadow">
               <div class="card-header border-0">
-                <h3 class="mb-0">현재 관리 환자 정보</h3>
+                <h3 class="mb-0">해당 환자 진료 정보</h3>
               </div>
               <div class="table-responsive">
                 <table class="table align-items-center table-flush">
                   <thead class="thead-light">
                     <tr>
-                      <th scope="col">환자 번호</th>
-                      <th scope="col">성명</th>
-                      <th scope="col">나이</th>
-                      <th scope="col">성별</th>
-                      <th scope="col">상세 조회</th>
+                      <th scope="col">id</th>
+                      <th scope="col">방문회차</th>
+                      <th scope="col">방문날짜</th>
+                      <th scope="col">state</th>
+                      <th scope="col">action</th>
+                      <th scope="col">reward</th>
+                      <th scope="col">혈액검사수치</th>
+                      <th scope="col">심전도수치</th>
+                      <th scope="col">혈압</th>
+                      <th scope="col">x-ray</th>
+                      <th scope="col">초음파</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="patient: ${patientList}">
+                    <tr th:each="patient:  ${patientRecordList}">
                       <th scope="row">
                         <div class="media align-items-center">
                           <a href="#" class="avatar rounded-circle mr-3">
@@ -296,20 +301,32 @@
                           <!-- 여기가 환자 정보 시작  -->
                           <div class="media-body">
                             <span class="mb-0 text-sm"
-                              ><td th:text="${patient.id}"></td
+                              ><td th:text="${patient.patientId}"></td
                             ></span>
                           </div>
                         </div>
                       </th>
-                      <td th:text="${patient.patientName}"></td>
-                      <!--환자 이름   -->
-                      <td class="age-tag" th:text="${patient.patientAge}">
-                        <!-- 환자 나이 -->
-                        <!-- <p></p> -->
+                      <td th:text="${patient.turn}"></td>
+                      <td th:text="${patient.visitDate}"></td>
+                      <td th:text="${patient.state}"></td>
+                      <td th:text="${patient.action}"></td>
+                      <td th:text="${patient.reward}"></td>
+                      <td th:text="${patient.blood}"></td>
+                      <td th:text="${patient.ECG}"></td>
+                      <td th:text="${patient.bloodPressure}"></td>
+                      <td>
+                        <img
+                          th:src="@{${'data:image/png;base64,' + patient.xRay}}"
+                          alt="X-Ray"
+                        />
                       </td>
-                      <td th:text="${patient.patientGender}">
-                        <!-- 환자 성별  -->
+                      <td>
+                        <img
+                          th:src="@{${'data:image/png;base64,' + patient.ultraSound}}"
+                          alt="UltraSound"
+                        />
                       </td>
+
                       <td th:href="@{|/select/patient/${patient.id}|}">
                         <div class="d-flex align-items-center">
                           <span class="mr-2"><button>조회</button></span>
@@ -319,35 +336,6 @@
                     </tr>
                   </tbody>
                 </table>
-              </div>
-              <div class="card-footer py-4">
-                <nav aria-label="...">
-                  <ul class="pagination justify-content-end mb-0">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#" tabindex="-1">
-                        <i class="fas fa-angle-left"></i>
-                        <span class="sr-only">Previous</span>
-                      </a>
-                    </li>
-                    <li class="page-item active">
-                      <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#"
-                        >2 <span class="sr-only">(current)</span></a
-                      >
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">
-                        <i class="fas fa-angle-right"></i>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
               </div>
             </div>
           </div>
