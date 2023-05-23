@@ -33,7 +33,7 @@ public class HomeController {
             session.setAttribute("loginName", loginResult.getMemberName());
             List<PatientDTO> patientDTOList = memberService.findAll(session);
             model.addAttribute("patientList", patientDTOList);
-            return "main";
+            return "main2";
         } else {
             // login 실패
             return "index";
@@ -61,5 +61,10 @@ public class HomeController {
         List<PatientRecordDTO> patientRecordDTOList = memberService.findDetail(id);
         model.addAttribute("patientRecordList", patientRecordDTOList);
         return "detail";
+    }
+
+    @GetMapping("/insert")
+    public String insert(){
+        return "insert";
     }
 }
