@@ -191,6 +191,7 @@
             </div>
           </form>
           <!-- User -->
+          <!--민수야 여기봐!!!!!!!!! ul 태그 부분만 옮기면 됨쇼!!!! js 폴더에 argon-dashboard.js 파일 넣어놨는데 두 개를 따로 연결해야되는지 아님 파일만 둬도 되는지 그거까진 모르겠네-->
           <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
               <a
@@ -215,26 +216,6 @@
               <div
                 class="dropdown-menu dropdown-menu-arrow dropdown-menu-right"
               >
-                <div class="dropdown-header noti-title">
-                  <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <a href="../examples/profile.html" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="../examples/profile.html" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <a href="../examples/profile.html" class="dropdown-item">
-                  <i class="ni ni-calendar-grid-58"></i>
-                  <span>Activity</span>
-                </a>
-                <a href="../examples/profile.html" class="dropdown-item">
-                  <i class="ni ni-support-16"></i>
-                  <span>Support</span>
-                </a>
-                <div class="dropdown-divider"></div>
                 <a href="#!" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
@@ -268,9 +249,9 @@
                   </thead>
                   <tbody>
                     <tr th:each="patient: ${patientList}">
-                      <th scope="row" text="${patient.id}">
+                      <td scope="row" th:text="${patient.id}">
                         <!-- 여기가 환자 정보 시작  -->
-                      </th>
+                      </td>
                       <td th:text="${patient.patientName}"></td>
                       <!--환자 이름   -->
                       <td class="age-tag" th:text="${patient.patientAge}">
@@ -280,9 +261,9 @@
                       <td th:text="${patient.patientGender}">
                         <!-- 환자 성별  -->
                       </td>
-                      <td th:href="@{|/select/patient/${patient.id}|}">
+                      <td>
                         <div class="d-flex align-items-center">
-                          <span class="mr-2"><button>조회</button></span>
+                          <span class="mr-2"><button><a th:href="@{|/select/patient/${patient.id}|}">조회</a></button></span>
                           <div></div>
                         </div>
                       </td>
