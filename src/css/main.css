@@ -16966,7 +16966,7 @@ textarea[resize="horizontal"] {
 .navbar-vertical .navbar-nav .nav-link {
   padding-left: 1rem;
   padding-right: 1rem;
-  font-size: 0.9rem;
+  font-size: 1.3rem;
 }
 
 .navbar-vertical .navbar-nav .nav-link.active {
@@ -18437,9 +18437,9 @@ textarea[resize="horizontal"] {
 }
 
 .table thead th {
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  font-size: 0.65rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   border-bottom: 1px solid #e9ecef;

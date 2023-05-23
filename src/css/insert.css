@@ -91,7 +91,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #525f7f;
+  /* color: #525f7f; */
   text-align: left;
   background-color: #f8f9fe;
 }
@@ -453,7 +453,7 @@ h6,
 }
 
 .display-2 {
-  font-size: 2.75rem;
+  font-size: 3rem;
   font-weight: 600;
   line-height: 1.5;
 }
@@ -642,7 +642,7 @@ pre code {
 .row {
   display: flex;
   flex-wrap: wrap;
-  width:100%;
+  width: 100%;
   margin-right: -15px;
   margin-left: -15px;
 }
@@ -9177,7 +9177,7 @@ button.bg-darker:focus {
 
 .pb-8,
 .py-8 {
-  padding-bottom: 8rem !important;
+  padding-bottom: 5rem !important;
 }
 
 .pl-8,
@@ -13554,7 +13554,7 @@ button.bg-lighter:focus {
 }
 
 .bg-gradient-default {
-  background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+  background: linear-gradient(to left, #172b4d 0, #1a174d 90deg) !important;
 }
 
 .bg-gradient-white {
@@ -13961,7 +13961,7 @@ button.section-darker:focus {
 }
 
 .fill-opacity-8 {
-  fill-opacity: 0.8;
+  fill-opacity: 0.1;
 }
 
 .floating {
@@ -16419,7 +16419,7 @@ textarea[resize="horizontal"] {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 80%;
   transition: all 0.15s ease;
 }
 
@@ -16967,7 +16967,7 @@ textarea[resize="horizontal"] {
 .navbar-vertical .navbar-nav .nav-link {
   padding-left: 1rem;
   padding-right: 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .navbar-vertical .navbar-nav .nav-link.active {
