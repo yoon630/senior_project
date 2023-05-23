@@ -40,11 +40,7 @@
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="../index.html">
           <!-- 로고 넣기  -->
-          <img
-            src="../assets/img/brand/blue.png"
-            class="navbar-brand-img"
-            alt="..."
-          />
+          <img src="/public/logo.png" class="navbar-brand-img" alt="..." />
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -188,7 +184,8 @@
           <a
             class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             href="../index.html"
-            >환자 진료 상세내역
+          >
+            Login
           </a>
           <!-- Form -->
           <form
@@ -292,12 +289,6 @@
                     <tr th:each="patient:  ${patientRecordList}">
                       <th scope="row">
                         <div class="media align-items-center">
-                          <a href="#" class="avatar rounded-circle mr-3">
-                            <img
-                              alt="Image placeholder"
-                              src="/public/medical.png"
-                            />
-                          </a>
                           <!-- 여기가 환자 정보 시작  -->
                           <div class="media-body">
                             <span class="mb-0 text-sm"
