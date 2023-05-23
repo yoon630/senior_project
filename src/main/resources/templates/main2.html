@@ -268,9 +268,9 @@
                   </thead>
                   <tbody>
                     <tr th:each="patient: ${patientList}">
-                      <th scope="row" text="${patient.id}">
+                      <td scope="row" th:text="${patient.id}">
                         <!-- 여기가 환자 정보 시작  -->
-                      </th>
+                      </td>
                       <td th:text="${patient.patientName}"></td>
                       <!--환자 이름   -->
                       <td class="age-tag" th:text="${patient.patientAge}">
@@ -280,9 +280,9 @@
                       <td th:text="${patient.patientGender}">
                         <!-- 환자 성별  -->
                       </td>
-                      <td th:href="@{|/select/patient/${patient.id}|}">
+                      <td>
                         <div class="d-flex align-items-center">
-                          <span class="mr-2"><button>조회</button></span>
+                          <span class="mr-2"><button><a th:href="@{|/select/patient/${patient.id}|}">조회</a></button></span>
                           <div></div>
                         </div>
                       </td>
