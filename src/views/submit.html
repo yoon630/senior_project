@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>medITech</title>
+    <!-- Favicon -->
+    <link href="/public/healthcare.png" rel="icon" type="image/png" />
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <link href="../assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+    <link
+      href="../assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- CSS Files -->
+    <link href="/src/css/submit.css" rel="stylesheet" />
+  </head>
+
+  <body class="">
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Q-learning Result</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <table class="table align-items-center table-flush">
+            <tr>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <td>
+                        <label class="form-control-label" for="input-username"
+                          >Action 1</label
+                        >
+                      </td>
+
+                      <!-- <input
+                        type="text"
+                        id="input-username"
+                        class="form-control form-control-alternative"
+                        placeholder="Action1"
+                        value="{patient_record_table.action}"
+                      /> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <td>
+                        <label class="form-control-label">Action 2</label>
+                      </td>
+
+                      <!-- <input
+                        type="text"
+                        id="input-email"
+                        class="form-control form-control-alternative"
+                        placeholder="{patient_record_table.action}"
+                        value="{patient_record_table.action}"
+                      /> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <td><label class="form-control-label">Reward</label></td>
+
+                      <!-- <input
+                        type="text"
+                        id="input-first-name"
+                        class="form-control form-control-alternative"
+                        placeholder="Reward"
+                        value="{patient_record_table.reward}"
+                      /> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <td><label class="form-control-label">State</label></td>
+
+                      <!-- <input
+                        type="text"
+                        id="input-last-name"
+                        class="form-control form-control-alternative"
+                        placeholder="state"
+                        value="{patient_record_table.state}"
+                      /> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+            {{#each patient_record_table}}
+            <tr>
+              <td>{{action}}</td>
+              <td>{{action}}</td>
+              <td>{{reward}}</td>
+              <td>{{state}}</td>
+            </tr>
+            {{/each}}
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

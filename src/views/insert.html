@@ -8,7 +8,7 @@
     />
     <title>medITech</title>
     <!-- Favicon -->
-    <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png" />
+    <link href="/public/healthcare.png" rel="icon" type="image/png" />
     <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
@@ -22,9 +22,20 @@
     />
     <!-- CSS Files -->
     <link href="/src/css/insert.css" rel="stylesheet" />
+
+    <!-- 팝업창 호출 -->
+    <script language="javascript">
+      function showPopup() {
+        window.open(
+          "submit.html",
+          "a",
+          "width=400, height=300, left=100, top=50"
+        );
+      }
+    </script>
   </head>
 
-  <body class="">
+  <body class="insert">
     <nav
       class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
       id="sidenav-main"
@@ -201,7 +212,14 @@
                     <h3 class="mb-0">환자 상태 입력</h3>
                   </div>
                   <div class="col-4 text-right">
-                    <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                    <!-- submit 버튼 부분  -->
+                    <a href="#!"
+                      ><input
+                        class="submit"
+                        type="submit"
+                        value="Submit"
+                        onclick="showPopup();"
+                    /></a>
                   </div>
                 </div>
               </div>
@@ -221,8 +239,8 @@
                             type="text"
                             id="input-username"
                             class="form-control form-control-alternative"
-                            placeholder="Username"
-                            value="input state"
+                            placeholder="input your patient's state"
+                            value=""
                           />
                         </div>
                       </div>

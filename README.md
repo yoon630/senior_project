@@ -72,3 +72,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ## `파일 개요 정리`
 
 app.js가 로그인이야. 이게 메인임 -> 이거 디자인 요소는 index.html이랑 index.css임
+
+## `각 html파일 역할`
+
+insert.html -> 이게 환자 정보 입력
+detail.html -> 환자 진료 정보 조회
+submit.html -> 이게 action이랑 reward 출력하는 작은 팝업창

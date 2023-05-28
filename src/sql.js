@@ -1,4 +1,5 @@
 import mysql from "mysql2";
+import async from "hbs/lib/async";
 
 const pool = mysql.createPool({
   host: "localhost",

@@ -20780,3 +20780,14 @@ pre > code.highlight {
   line-height: 1.5;
   border-radius: 0.375rem;
 }
+
+table {
+  border-collapse: collapse;
+}
+th,
+td {
+  border-left: 0;
+  border-right: 0;
+  width: 100px;
+  height: 20px;
+}
