@@ -119,6 +119,7 @@ h6 {
 p {
   margin-top: 0;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 abbr[title],
@@ -633,10 +634,10 @@ pre code {
 
 .container-fluid {
   width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+  padding-right: 5px;
+  padding-left: 5px;
+  /* margin-right: auto;
+  margin-left: auto; */
 }
 
 .row {
@@ -3718,6 +3719,7 @@ input[type="button"].btn-block {
   display: block;
   width: 100%;
   padding: 0.1rem 1rem;
+  margin-top: 10px;
   clear: both;
   font-weight: 600;
   color: #fff;
@@ -5817,6 +5819,7 @@ input[type="button"].btn-block {
 .media {
   display: flex;
   align-items: flex-start;
+  width: 100%;
 }
 
 .media-body {
@@ -14567,7 +14570,7 @@ button.section-darker:focus {
 }
 
 .text-sm {
-  font-size: 0.875rem !important;
+  font-size: 1rem !important;
 }
 
 .text-lg {
@@ -14841,7 +14844,7 @@ a.text-lighter:focus {
 
 .avatar {
   color: #fff;
-  background-color: #adb5bd;
+  background-color: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -15604,7 +15607,23 @@ a.btn-icon-only {
 .close {
   transition: all 0.15s ease;
 }
-
+.chart-canvas {
+  vertical-align: middle;
+  border-style: none;
+  height: 320px;
+  width: 400px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.chart-canvas2 {
+  vertical-align: middle;
+  /* position: relative; */
+  border-style: none;
+  height: 320px;
+  width: 400px;
+  /* padding-right: 3px; */
+  /* padding-left: 5px; */
+}
 .close > span:not(.sr-only) {
   background-color: transparent;
   color: rgba(0, 0, 0, 0.6);
@@ -20770,3 +20789,13 @@ pre > code.highlight {
   font-family: sans-serif;
 }
 /*# sourceMappingURL=dashboard-free.css.map */
+
+.doctor-name {
+  margin-bottom: 0%;
+  text-align: center;
+  font-size: medium;
+  color: #f5fffa;
+  font-weight: bold;
+  border-left: 1px solid #f5fffa;
+  padding-left: 7px;
+}

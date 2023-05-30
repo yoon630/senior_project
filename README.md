@@ -78,3 +78,8 @@ app.js가 로그인이야. 이게 메인임 -> 이거 디자인 요소는 index.
 insert.html -> 이게 환자 정보 입력
 detail.html -> 환자 진료 정보 조회
 submit.html -> 이게 action이랑 reward 출력하는 작은 팝업창
+
+main.html -> 181~197번째 줄 (로그아웃 하는 부분이랑 의사 name 띄우는 부분 수정 ), 287번째 줄부터 보여주기식 그래프 코드
+여기서 보여주기식 사진은 public에 medical-image1,2 사용하면 됨
+
+main.css 도 수정햇으므로 이것도 그대로 복붙 바람!!! 안그럼 적용 안됨
