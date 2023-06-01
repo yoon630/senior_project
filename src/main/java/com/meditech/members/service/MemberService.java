@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,7 @@ public class MemberService {
     //메소드 호출
     //memberRepository.save(memberEntity) 하면 save함수를 통해서 jpa에 의해 insert문이 자동 실행됨
     private final MemberRepository memberRepository;
+
     public MemberDTO login(MemberDTO memberDTO) {
         /*
             1. 회원이 입력한 이메일로 DB에서 조회를 함
@@ -70,4 +72,20 @@ public class MemberService {
         }
         return patientRecordDTOList;
     }
+
+    public void insert(PatientRecordDTO patientRecordDTO, HttpSession session) {
+        List<PatientRecordEntity> patientRecordEntityList = patientRecordRepository.findByIdPatientEntityId(patientRecordDTO.getPatientId());
+        if(!patientRecordEntityList.isEmpty()){//방문내역이 있으면
+            Optional<Integer> latestTurn = patientRecordRepository.findLatestTurnByPatientId(patientRecordDTO.getPatientId());
+            patientRecordDTO.setTurn(latestTurn.get() + 1);
+        }
+        else{
+            patientRecordDTO.setTurn(1);
+        }
+
+        PatientRecordEntity patientRecordEntity = PatientRecordEntity.toInsertEntity(patientRecordDTO, session, patientRecordRepository);
+        patientRecordRepository.save(patientRecordEntity);
+    }
+
+
 }

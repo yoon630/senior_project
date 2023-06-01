@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -48,14 +49,6 @@ public class HomeController {
         return "index";
     }
 
-//    @GetMapping("/select/patient")
-//    public String findAll(HttpSession session, Model model){//@ModelAttribute 써도되는지 잘 모름
-//        //System.out.println("id: " + session.getAttribute("id"));
-//        List<PatientDTO> patientDTOList = memberService.findAll(session);
-//        model.addAttribute("patientList", patientDTOList);
-//        return "list";
-//    }
-
     @GetMapping("/select/patient/{id}")//해당환자의 진료내역조회
     public String findDetail(@PathVariable Long id, Model model){
         List<PatientRecordDTO> patientRecordDTOList = memberService.findDetail(id);
@@ -68,8 +61,23 @@ public class HomeController {
         return "insert";
     }
 
-//    @PostMapping("/insert")
-//    public String insert(){
-//
-//    }
+    @PostMapping("/insert")
+    public String insert(@ModelAttribute PatientRecordDTO patientRecordDTO, HttpSession session){
+        memberService.insert(patientRecordDTO, session);
+        return "insert";//입력
+        //원래 창은 입력 후에도 입력창으로 계속 있어야 함, 결과가 출력되는 팝업창은 별도로 출력되도록 함.
+        //잘 입력한 경우에만 /submit 팝업창도 getmapping되도록 if문아래에 getmapping을 해줘야 하나??
+        //if else로 해서 잘 입력햇으면 insert창으로, 잘못입력했으면 잘못입력했다는 창?(잘못입력햇다는 창에서 ok버튼 누르면 다시 insert창으로 오도록)
+    }
+
+    @GetMapping("/select/data")
+    public String dataForm(){
+        return "data";
+    }
+
+    @GetMapping("/submit")//???
+    public String showPopup(){
+        return "submit.html";
+    }
+
 }

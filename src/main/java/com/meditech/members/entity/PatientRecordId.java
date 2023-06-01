@@ -19,6 +19,7 @@ public class PatientRecordId implements Serializable {//복합키를 위한 클�
     @ManyToOne
     @JoinColumn(name="patientId")
     private PatientEntity patientEntity;
-    @Column
-    private int turn;
+    @Column(nullable = false) //자동 증가 못쓴대
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)//auto increment
+    private int turn = 1;
 }
