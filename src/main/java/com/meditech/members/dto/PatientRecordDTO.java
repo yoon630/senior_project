@@ -20,11 +20,12 @@ public class PatientRecordDTO {
     private int state;
     private int action;
     private double reward;
-    private double blood;//혈액검사
+    private String blood;//혈액검사
     private int ECG;//심전도 검사
-    private int bloodPressure;//혈압
+    private String bloodPressure;//혈압
     private Blob xRay;//x_ray 사진
     private Blob ultraSound;//초음파 사진
+    private String comment;//의사 소견
 
     public static PatientRecordDTO toPatientRecordDTO(PatientRecordEntity patientRecordEntity) {//entity->dto로 변환
         PatientRecordDTO patientRecordDTO = new PatientRecordDTO();
@@ -46,6 +47,7 @@ public class PatientRecordDTO {
         patientRecordDTO.setBloodPressure(patientRecordEntity.getBloodPressure());
         patientRecordDTO.setXRay(patientRecordEntity.getXRay());
         patientRecordDTO.setUltraSound(patientRecordEntity.getUltraSound());
+        patientRecordDTO.setComment(patientRecordEntity.getComment());
         return patientRecordDTO;
     }
 }
