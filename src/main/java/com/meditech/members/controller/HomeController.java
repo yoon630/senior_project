@@ -64,7 +64,12 @@ public class HomeController {
     }
 
     @GetMapping("/insert")
-    public String insert(){
+    public String insertForm(){
         return "insert";
     }
+
+//    @PostMapping("/insert")
+//    public String insert(){
+//
+//    }
 }
