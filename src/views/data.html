@@ -1,3 +1,4 @@
+<!-- 통계페이지 -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
@@ -7,8 +8,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <title>medITech</title>
-    <!-- Favicon -->
-    <link href="../assets/img/brand/favicon.png" rel="icon" type="image/png" />
+
     <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
@@ -18,10 +18,16 @@
     <link href="/public/healthcare.png" rel="icon" type="image/png" />
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="/src/css/main.css" />
+    <link rel="stylesheet" href="/src/css/data.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
   </head>
 
-  <body id="main">
+  <body id="data">
     <nav
       class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
       id="sidenav-main"
@@ -155,8 +161,9 @@
         </div>
       </div>
     </nav>
+    <!-- 가운데 화면  -->
     <div class="main-content">
-      <!-- Navbar -->
+      <!-- 의사 id 뜨는 부분 -->
       <nav
         class="navbar navbar-top navbar-expand-md navbar-dark"
         id="navbar-main"
@@ -199,174 +206,168 @@
           </ul>
         </div>
       </nav>
-      <!-- End Navbar -->
-      <!-- Header -->
-      <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8"></div>
-      <div class="container-fluid mt--7">
-        <!-- Table -->
-        <div class="row">
-          <div class="col">
-            <div class="card shadow">
-              <div class="card-header border-0">
-                <h3 class="mb-0">현재 관리 환자 정보</h3>
+      <!-- 여기서 부터 그래프 보이는 부분  -->
+      <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+        <div class="container-fluid">
+          <div class="header-body">
+            <!-- Card stats -->
+            <div class="row">
+              <div class="col-xl-3 col-lg-6">
+                <div class="card card-stats mb-4 mb-xl-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">
+                          환자 ID
+                        </h5>
+                        <span
+                          class="h2 font-weight-bold mb-0"
+                          text="${patient.id}"
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="table-responsive">
-                <table class="table align-items-center table-flush">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">환자 번호</th>
-                      <th scope="col">성명</th>
-                      <th scope="col">나이</th>
-                      <th scope="col">성별</th>
-                      <th scope="col">상세 조회</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="patient: ${patientList}">
-                      <th scope="row" text="${patient.id}">
-                        <!-- 여기가 환자 정보 시작  -->
-                      </th>
-                      <td th:text="${patient.patientName}"></td>
-                      <!--환자 이름   -->
-                      <td class="age-tag" th:text="${patient.patientAge}">
-                        <!-- 환자 나이 -->
-                      </td>
-                      <td th:text="${patient.patientGender}">
-                        <!-- 환자 성별  -->
-                      </td>
-                      <td>
-                        <div class="d-flex align-items-center">
-                          <span class="mr-2">
-                            <button
-                              type="button"
-                              class="btn btn-sm btn-primary"><a th:href="@{|/select/patient/${patient.id}|}">조회</a>
-                            </button></span
-                          >
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-
-
-<!-- 새로운 환자 정보 입력 하는 테이블 -> 입력해야하니까 form 형태로 구성 -->
-<div class="col-xl-8 order-xl-1">
-  <div class="card bg-secondary shadow">
-    <div class="card-header bg-white border-0">
-      <div class="row align-items-center">
-        <div class="col-8">
-          <h3 class="mb-0">새로운 환자 입력</h3>
-        </div>
-        <div class="col-4 text-right">
-          <a href="/" class="btn btn-sm btn-primary">정보 입력</a>
-        </div>
-      </div>
-    </div>
-     <table  class="table align-items-center table-flush">
-      <div class="card-body">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col"><label class="form-control-label" for="input-username"
-                        >환자 ID</label
-                      ></th>
-                      <th scope="col"> <label
-                        class="form-control-label"
-                        for="input-first-name"
-                        >이름</label
-                      ></th>
-                      <th scope="col"> <label
-                        class="form-control-label"
-                        for="input-first-name"
-                        >나이</label
-                      ></th>
-                      <th scope="col"> <label
-                        class="form-control-label"
-                        for="input-first-name"
-                        >성별</label
-                      ></th>
-                    </tr>
-                  </thead>
-  
-                  <tbody>
-                    <tr>
-                      <th scope="row">
-                        <input
-                        type="text"
-                        id="input-username"
-                        class="form-control form-control-alternative"
-                        placeholder="Patient ID"
-                        name=""
-                      />
-                      </th>
-                      <td > <input
-                        type="text"
-                        id="input-first-name"
-                        class="form-control form-control-alternative"
-                        placeholder="이름"
-                        name=""
-                      /></td>
-                     
-                      <td class="age-tag">
-                        <input
-                        type="text"
-                        id="input-first-name"
-                        class="form-control form-control-alternative"
-                        placeholder="나이"
-                        name=""
-                      />
-                      </td>
-                      <td >
-                        <input
-                        type="text"
-                        id="input-first-name"
-                        class="form-control form-control-alternative"
-                        placeholder="성별"
-                        name=""
-                      />
-                      </td>
-                    </tr>
-                  </tbody>
-           </div>
-     </table>
-  </div>
- </div>
-</div>
-</div>
-            <!--  여기는 페이지 넘기는 부분에 대한 거  -->
-            <div class="card-footer py-4">
-              <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#"
-                      >2 <span class="sr-only">(current)</span></a
-                    >
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">3</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      <i class="fas fa-angle-right"></i>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <div class="col-xl-3 col-lg-6">
+                <div class="card card-stats mb-4 mb-xl-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">
+                          Last Q-learning 시점
+                        </h5>
+                        <span
+                          class="h2 font-weight-bold mb-0"
+                          text="{patient_record_table.visit_date} "
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <!-- 여기 걍 보여주기 식 그래프 넣는 부분 -->
+      </div>
+      <div class="container-fluid mt--7">
+        <div class="row">
+          <div class="col-xl-8 mb-5 mb-xl-0">
+            <div class="card bg-gradient-default shadow">
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h6 class="text-uppercase text-light ls-1 mb-1">
+                      Overview
+                    </h6>
+                    <h2 class="text-white mb-0">Q-learning Result</h2>
+                  </div>
+                  <div class="col">
+                    <ul class="nav nav-pills justify-content-end">
+                      <li
+                        class="nav-item mr-2 mr-md-0"
+                        data-toggle="chart"
+                        data-target="#chart-sales"
+                        data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}'
+                        data-prefix="$"
+                        data-suffix="k"
+                      >
+                        <a
+                          href="#"
+                          class="nav-link py-2 px-3 active"
+                          data-toggle="tab"
+                        >
+                          <span class="d-none d-md-block">Episode</span>
+                          <span class="d-md-none">E</span>
+                        </a>
+                      </li>
+                      <li
+                        class="nav-item"
+                        data-toggle="chart"
+                        data-target="#chart-sales"
+                        data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}'
+                        data-prefix="$"
+                        data-suffix="k"
+                      >
+                        <a
+                          href="#"
+                          class="nav-link py-2 px-3"
+                          data-toggle="tab"
+                        >
+                          <span class="d-none d-md-block">Max Q</span>
+                          <span class="d-md-none">Q</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Chart -->
+                <div class="chart">
+                  <!-- Chart wrapper -->
+                  <canvas id="chart-sales" class="chart-canvas"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="card shadow">
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h2 class="mb-0">medITech</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <!-- Chart -->
+                <div class="chart">
+                  <img
+                    class="doctor-image"
+                    src="/public/doctor-image.jpg"
+                    alt="doctor-image"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row mt-5">
+          <div class="col-xl-8 mb-5 mb-xl-0">
+            <div class="card shadow">
+              <div class="card-header border-0">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="mb-0">해당 환자 임상시험 History</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">id</th>
+                      <th scope="col">방문회차</th>
+                      <th scope="col">방문날짜</th>
+                      <th scope="col">현재 state</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="patient:  ${patientRecordList}">
+                      <th scope="row" th:text="${patient.patientId}">
+                        1234567890
+                      </th>
+                      <td th:text="${patient.turn}">1</td>
+                      <td th:text="${patient.visitDate}">2023-05-21</td>
+                      <td th:text="${patient.state}">S1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
           <div class="col-xl-4">
             <div class="card shadow">
               <div class="card-header border-0">
@@ -497,65 +498,62 @@
               </div>
             </div>
           </div>
-
- <!-- 여기는 사진 이미지  -->
-          <div class="col-xl-8 mb-5 mb-xl-0">
-            <div class="card shadow">
-              <div class="card bg-gradient-default shadow">
-                <div class="card-header bg-transparent">
-                  <div class="row align-items-center">
-                    <div class="col">
-                      <h6 class="text-uppercase text-light ls-1 mb-1">medITech</h6>
-                      <h2 class="text-white mb-0">강화학습을 기반으로 한 임상시험 시스템</h2>
-                    </div>
-                 
-                  </div>
-                </div>
-                <div class="card-body">
-                  <!-- Chart -->
-                  <div class="chart">
-                    <!-- Chart wrapper -->
-                    <img id="chart-sales" class="chart-canvas" src="/public/main-image.jpg"></img>
-                    <img id="chart-sales" class="chart-canvas2" src="/public/main-image2.jpg"></img>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
-          </div>
-
         </div>
-
         <!-- Footer -->
         <footer class="footer">
           <div class="row align-items-center justify-content-xl-between">
             <div class="col-xl-6">
               <div class="copyright text-center text-xl-left text-muted">
-                &copy; 2023, medITech
+                &copy; 2023
+                <a
+                  href="/index.html"
+                  class="font-weight-bold ml-1"
+                  target="_blank"
+                  >medITech</a
+                >
               </div>
             </div>
             <div class="col-xl-6">
               <ul
                 class="nav nav-footer justify-content-center justify-content-xl-end"
-              ></ul>
+              >
+                <li class="nav-item">
+                  <a
+                    href="https://www.creative-tim.com"
+                    class="nav-link"
+                    target="_blank"
+                    >Creative Tim</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="https://www.creative-tim.com/presentation"
+                    class="nav-link"
+                    target="_blank"
+                    >About Us</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="http://blog.creative-tim.com"
+                    class="nav-link"
+                    target="_blank"
+                    >Blog</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
+                    class="nav-link"
+                    target="_blank"
+                    >MIT License</a
+                  >
+                </li>
+              </ul>
             </div>
           </div>
         </footer>
       </div>
     </div>
-    <!--   Core   -->
-    <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!--   Optional JS   -->
-    <!--   Argon JS   -->
-    <script src="../assets/js/argon-dashboard.min.js?v=1.1.2"></script>
-    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-    <script>
-      window.TrackJS &&
-        TrackJS.install({
-          token: "ee6fab19c5a04ac1a32a645abde4613a",
-          application: "argon-dashboard-free",
-        });
-    </script>
   </body>
 </html>
