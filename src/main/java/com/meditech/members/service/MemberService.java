@@ -11,9 +11,12 @@ import com.meditech.members.repository.PatientRecordRepository;
 import com.meditech.members.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,20 +75,60 @@ public class MemberService {
         }
         return patientRecordDTOList;
     }
+    private final PatientRecordRepository patientRecordRepository1;
+    public void insert(PatientRecordDTO patientRecordDTO, HttpSession session) throws IOException {
+        //파일 첨부 여부에 따라 로직 분리
+        if(patientRecordDTO.getXRay().isEmpty()&&patientRecordDTO.getUltraSound().isEmpty()){
+            //첨부 파일 없음.
+            List<PatientRecordEntity> patientRecordEntityList = patientRecordRepository1.findByIdPatientEntityId(patientRecordDTO.getPatientId());
+            if(!patientRecordEntityList.isEmpty()){//방문내역이 있으면
+                Optional<Integer> latestTurn = patientRecordRepository1.findLatestTurnByPatientId(patientRecordDTO.getPatientId());
+                patientRecordDTO.setTurn(latestTurn.get() + 1);
+            }
+            else{
+                patientRecordDTO.setTurn(1);
+            }
+//        patientRecordDTO.setUltraSound(null);
+//        patientRecordDTO.setXRay(null);
 
-    public void insert(PatientRecordDTO patientRecordDTO, HttpSession session) {
-        List<PatientRecordEntity> patientRecordEntityList = patientRecordRepository.findByIdPatientEntityId(patientRecordDTO.getPatientId());
-        if(!patientRecordEntityList.isEmpty()){//방문내역이 있으면
-            Optional<Integer> latestTurn = patientRecordRepository.findLatestTurnByPatientId(patientRecordDTO.getPatientId());
-            patientRecordDTO.setTurn(latestTurn.get() + 1);
+            PatientRecordEntity patientRecordEntity = PatientRecordEntity.toInsertEntity(patientRecordDTO, session);
+            patientRecordRepository1.save(patientRecordEntity);
         }
         else{
-            patientRecordDTO.setTurn(1);
+            //첨부파일 있음.
+            String originalxRayFileName = null;
+            String storedxRayFileName = null;
+            String originalultraSoundFileName = null;
+            String storedultraSoundFileName = null;
+            if(!patientRecordDTO.getXRay().isEmpty()){//xray파일 있으면
+                MultipartFile xRay = patientRecordDTO.getXRay();
+                originalxRayFileName = patientRecordDTO.getOriginalxRayFileName();
+                storedxRayFileName = System.currentTimeMillis()+"_"+originalxRayFileName;
+                String savePath  = "C:/Users/kms47/Downloads/종설/imgs/" + storedxRayFileName;
+                xRay.transferTo(new File(savePath));
+            }
+            if(!patientRecordDTO.getUltraSound().isEmpty()){//ultrasound파일 있으면
+                MultipartFile ultraSound = patientRecordDTO.getUltraSound();
+                originalultraSoundFileName = patientRecordDTO.getOriginalultraSoundFileName();
+                storedultraSoundFileName = System.currentTimeMillis()+"_"+originalultraSoundFileName;
+                String savePath  = "C:/Users/kms47/Downloads/종설/imgs/" + storedultraSoundFileName;
+                ultraSound.transferTo(new File(savePath));
+            }
+            PatientRecordEntity patientRecordEntity = PatientRecordEntity.toInsertFileEntity(patientRecordDTO, session, originalxRayFileName, originalultraSoundFileName, storedxRayFileName, storedultraSoundFileName);
+            patientRecordRepository1.save(patientRecordEntity);
         }
-
-        PatientRecordEntity patientRecordEntity = PatientRecordEntity.toInsertEntity(patientRecordDTO, session, patientRecordRepository);
-        patientRecordRepository.save(patientRecordEntity);
     }
 
 
+    public void register(PatientDTO patientDTO, HttpSession session) {
+        Optional<PatientEntity> patientEntity = patientRepository.findById(patientDTO.getId());
+        if(!patientEntity.isPresent()){//해당 아이디 존재하지 않으면
+            patientDTO.setMemberId((long)session.getAttribute("loginId"));
+            PatientEntity patientEntity1 = PatientEntity.toPatientEntity(patientDTO,memberRepository);
+            patientRepository.save(patientEntity1);
+        }
+//        else{
+//
+//        }
+    }
 }

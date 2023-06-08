@@ -213,7 +213,8 @@
                   </div>
                   <div class="col-4 text-right">
                     <!-- submit 버튼 부분 연구가 필요해... 일단 주소를 지정해야해... 근데 무슨 주소지.. 버튼 누르면 원래창은 insert페이지 유지 -->
-                    <form action="/insert" method="post">
+<!--                    action="/insert"-->
+                    <form action="/insert" method="post" enctype="multipart/form-data"> <!--파일 경로 넘기기위한-->
                       <a href="/submit"
                       ><input
                           class="submit"
@@ -221,7 +222,7 @@
                           value="Submit"
                           onclick="showPopup();"
                       /></a>
-                    </form>
+
 
                   </div>
                 </div>
@@ -368,6 +369,7 @@
             </div>
           </div>
         </div>
+        </form>
         <!-- Footer -->
         <footer class="footer">
           <div class="row align-items-center justify-content-xl-between">

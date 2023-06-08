@@ -3,6 +3,7 @@ package com.meditech.members.controller;
 import com.meditech.members.dto.MemberDTO;
 import com.meditech.members.dto.PatientDTO;
 import com.meditech.members.dto.PatientRecordDTO;
+import com.meditech.members.repository.PatientRecordRepository;
 import com.meditech.members.service.MemberService;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.stereotype.Controller;
@@ -41,6 +42,23 @@ public class HomeController {
         }
     }
 
+//    @GetMapping("/main")
+//    public String main(){
+//        return "main2";
+//    }
+    //@PostMapping("/main")
+    //경로지정이 필요해보임
+    public String register(@ModelAttribute PatientDTO patientDTO, HttpSession session){
+        try {
+            // 예외가 발생할 수 있는 코드
+            //System.out.println("Patient ID: " + patientRecordDTO.getPatientId()); // 콘솔 출력
+            memberService.register(patientDTO, session);
+        } catch (Exception e) {
+            e.printStackTrace(); // 스택 트레이스 출력
+        }
+
+        return "main2";//입력
+    }
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         //Long id = (Long)session.getAttribute("id");
@@ -63,7 +81,14 @@ public class HomeController {
 
     @PostMapping("/insert")
     public String insert(@ModelAttribute PatientRecordDTO patientRecordDTO, HttpSession session){
-        memberService.insert(patientRecordDTO, session);
+        try {
+            // 예외가 발생할 수 있는 코드
+            System.out.println("Patient ID: " + patientRecordDTO.getPatientId()); // 콘솔 출력
+            memberService.insert(patientRecordDTO, session);
+        } catch (Exception e) {
+            e.printStackTrace(); // 스택 트레이스 출력
+        }
+
         return "insert";//입력
         //원래 창은 입력 후에도 입력창으로 계속 있어야 함, 결과가 출력되는 팝업창은 별도로 출력되도록 함.
         //잘 입력한 경우에만 /submit 팝업창도 getmapping되도록 if문아래에 getmapping을 해줘야 하나??

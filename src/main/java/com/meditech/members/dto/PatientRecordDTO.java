@@ -3,6 +3,7 @@ package com.meditech.members.dto;
 import com.meditech.members.entity.PatientEntity;
 import com.meditech.members.entity.PatientRecordEntity;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Blob;
 import java.time.LocalDate;
@@ -23,8 +24,13 @@ public class PatientRecordDTO {
     private String blood;//혈액검사
     private int ECG;//심전도 검사
     private String bloodPressure;//혈압
-    private Blob xRay;//x_ray 사진
-    private Blob ultraSound;//초음파 사진
+    private MultipartFile xRay;//x_ray 사진
+    private String originalxRayFileName;
+    private String storedxRayFileName;
+    private MultipartFile ultraSound;//초음파 사진, html->controller 파일 담는 용도
+    private String originalultraSoundFileName;//원본 파일 이름
+    private String storedultraSoundFileName;//서버저장용 파일 이름
+    private int fileAttached;//파일 첨부 여부 (첨부 1, 미첨부 0)
     private String comment;//의사 소견
 
     public static PatientRecordDTO toPatientRecordDTO(PatientRecordEntity patientRecordEntity) {//entity->dto로 변환
@@ -40,14 +46,25 @@ public class PatientRecordDTO {
             patientRecordDTO.setVisitDate(null);
         }
         patientRecordDTO.setState(patientRecordEntity.getState());
-        patientRecordDTO.setAction(patientRecordEntity.getState());
+        patientRecordDTO.setAction(patientRecordEntity.getAction());
         patientRecordDTO.setReward(patientRecordEntity.getReward());
         patientRecordDTO.setBlood(patientRecordEntity.getBlood());
         patientRecordDTO.setECG(patientRecordEntity.getECG());
         patientRecordDTO.setBloodPressure(patientRecordEntity.getBloodPressure());
-        patientRecordDTO.setXRay(patientRecordEntity.getXRay());
-        patientRecordDTO.setUltraSound(patientRecordEntity.getUltraSound());
+//        patientRecordDTO.setXRay(patientRecordEntity.getXRay());
+//        patientRecordDTO.setUltraSound(patientRecordEntity.getUltraSound());
         patientRecordDTO.setComment(patientRecordEntity.getComment());
+        if(patientRecordEntity.getFileAttached()==0){
+            patientRecordDTO.setFileAttached(patientRecordEntity.getFileAttached());//0
+        }
+        else{
+            patientRecordDTO.setFileAttached(patientRecordEntity.getFileAttached());//1
+            //파일 이름 가져가야 한다.
+            patientRecordDTO.setOriginalxRayFileName(patientRecordEntity.getOriginalxRayFileName());
+            patientRecordDTO.setStoredxRayFileName(patientRecordEntity.getStoredxRayFileName());
+            patientRecordDTO.setOriginalultraSoundFileName(patientRecordEntity.getOriginalultraSoundFileName());
+            patientRecordDTO.setStoredultraSoundFileName(patientRecordEntity.getStoredultraSoundFileName());
+        }
         return patientRecordDTO;
     }
 }

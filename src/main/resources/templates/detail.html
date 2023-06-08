@@ -300,13 +300,13 @@
                       <td th:text="${patient.bloodPressure}"></td>
                       <td>
                         <img
-                          th:src="@{${'data:image/png;base64,' + patient.xRay}}"
+                          th:src="@{|/upload/${patient.storedxRayFileName}|}"
                           alt="X-Ray"
                         />
                       </td>
                       <td>
                         <img
-                          th:src="@{${'data:image/png;base64,' + patient.ultraSound}}"
+                          th:src="@{|/upload/${patient.storedultraSoundFileName}|}"
                           alt="UltraSound"
                         />
                       </td>

@@ -7,6 +7,7 @@ import com.meditech.members.repository.PatientRepository;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpSession;
@@ -41,13 +42,23 @@ public class PatientRecordEntity {
     @Column
     private String bloodPressure;//혈압 최고/최저
     @Column
-    private Blob xRay;//x_ray 사진
+    private String xRay;//x_ray 사진
     @Column
-    private Blob ultraSound;//초음파 사진
+    private String ultraSound;//초음파 사진
     @Column(length = 500)
     private String comment;//의사 소견
+    @Column
+    private String originalxRayFileName;
+    @Column
+    private String storedxRayFileName;
+    @Column
+    private String originalultraSoundFileName;//원본 파일 이름
+    @Column
+    private String storedultraSoundFileName;//서버저장용 파일 이름
+    @Column
+    private int fileAttached; //1 or 0
 
-    public static PatientRecordEntity toInsertEntity(PatientRecordDTO patientRecordDTO, HttpSession session, PatientRecordRepository patientRecordRepository){
+    public static PatientRecordEntity toInsertEntity(PatientRecordDTO patientRecordDTO, HttpSession session){
         PatientRecordEntity patientRecordEntity1 = new PatientRecordEntity();
 
         Long patientId = patientRecordDTO.getPatientId();//long
@@ -59,13 +70,6 @@ public class PatientRecordEntity {
         PatientRecordId recordId = new PatientRecordId();
         recordId.setPatientEntity(patientEntity);//patient id를 가져오기 위한 patientEntity타입
         recordId.setTurn(patientRecordDTO.getTurn());
-//        Optional<Integer> latestTurn = patientRecordRepository.findLatestTurnByPatientId(patientId);
-//        if(latestTurn.isPresent()) {//방문 이력이 있으면 그 값을 가져와서 1추가
-//            recordId.setTurn(latestTurn.get() + 1);
-//        }
-//        else{//방문이력없으면 1로 초기화
-//            recordId.setTurn(1);
-//        }
 
         patientRecordEntity1.setId(recordId);
 
@@ -76,9 +80,10 @@ public class PatientRecordEntity {
         patientRecordEntity1.setBlood(patientRecordDTO.getBlood());
         patientRecordEntity1.setECG(patientRecordDTO.getECG());
         patientRecordEntity1.setBloodPressure(patientRecordDTO.getBloodPressure());
-        patientRecordEntity1.setXRay(patientRecordDTO.getXRay());
-        patientRecordEntity1.setUltraSound(patientRecordDTO.getUltraSound());
+//        patientRecordEntity1.setXRay(patientRecordDTO.getXRay());
+//        patientRecordEntity1.setUltraSound(patientRecordDTO.getUltraSound());
         patientRecordEntity1.setComment(patientRecordDTO.getComment());
+        patientRecordEntity1.setFileAttached(0);
         return patientRecordEntity1;
     }
     public static PatientRecordEntity toPatientRecordEntity(PatientRecordDTO patientRecordDTO, PatientRepository patientRepository) {//dto객체->entity객체로 변환
@@ -106,9 +111,42 @@ public class PatientRecordEntity {
         patientRecordEntity.setBlood(patientRecordDTO.getBlood());
         patientRecordEntity.setECG(patientRecordDTO.getECG());
         patientRecordEntity.setBloodPressure(patientRecordDTO.getBloodPressure());
-        patientRecordEntity.setXRay(patientRecordDTO.getXRay());
-        patientRecordEntity.setUltraSound(patientRecordDTO.getUltraSound());
+//        patientRecordEntity.setXRay(patientRecordDTO.getXRay());
+//        patientRecordEntity.setUltraSound(patientRecordDTO.getUltraSound());
         patientRecordEntity.setComment(patientRecordDTO.getComment());
         return patientRecordEntity;
+    }
+
+    public static PatientRecordEntity toInsertFileEntity(PatientRecordDTO patientRecordDTO, HttpSession session, String x, String u, String x1, String u1) {
+        PatientRecordEntity patientRecordEntity1 = new PatientRecordEntity();
+
+        Long patientId = patientRecordDTO.getPatientId();//long
+        PatientEntity patientEntity = new PatientEntity();
+        patientEntity.setId(patientId);
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId((long)session.getAttribute("loginId"));
+        patientEntity.setMemberEntity(memberEntity);
+        PatientRecordId recordId = new PatientRecordId();
+        recordId.setPatientEntity(patientEntity);//patient id를 가져오기 위한 patientEntity타입
+        recordId.setTurn(patientRecordDTO.getTurn());
+
+        patientRecordEntity1.setId(recordId);
+
+        Date currentDate = new Date();
+        patientRecordEntity1.setVisitDate(currentDate);
+
+        patientRecordEntity1.setState(patientRecordDTO.getState());
+        patientRecordEntity1.setBlood(patientRecordDTO.getBlood());
+        patientRecordEntity1.setECG(patientRecordDTO.getECG());
+        patientRecordEntity1.setBloodPressure(patientRecordDTO.getBloodPressure());
+//        patientRecordEntity1.setXRay(patientRecordDTO.getXRay());
+//        patientRecordEntity1.setUltraSound(patientRecordDTO.getUltraSound());
+        patientRecordEntity1.setComment(patientRecordDTO.getComment());
+        patientRecordEntity1.setFileAttached(1);
+        patientRecordEntity1.setOriginalxRayFileName(x);
+        patientRecordEntity1.setOriginalultraSoundFileName(u);
+        patientRecordEntity1.setStoredxRayFileName(x1);
+        patientRecordEntity1.setStoredultraSoundFileName(u1);
+        return patientRecordEntity1;
     }
 }
