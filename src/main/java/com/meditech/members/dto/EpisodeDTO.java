@@ -17,6 +17,7 @@ public class EpisodeDTO {
     private double s4;
     private double s5;
     private double s6;
+    private double epsilon;
 
     public static EpisodeDTO toEpisodeDTO(EpisodeEntity episodeEntity) {//entity->dto로 변환
         EpisodeDTO episodeDTO = new EpisodeDTO();
@@ -27,6 +28,7 @@ public class EpisodeDTO {
         episodeDTO.setS4(episodeEntity.getS4());
         episodeDTO.setS5(episodeEntity.getS5());
         episodeDTO.setS6(episodeEntity.getS6());
+        episodeDTO.setEpsilon(episodeEntity.getEpsilon());
         return episodeDTO;
     }
 }

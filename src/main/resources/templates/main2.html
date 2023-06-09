@@ -42,7 +42,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="../index.html">
+        <a class="navbar-brand pt-0" href="/main">
           <!-- 로고 넣기  -->
           <img src="/logo.png" class="navbar-brand-img" alt="..." />
         </a>
@@ -150,6 +150,11 @@
                 <i class="ni ni-planet text-blue"></i> 환자상태입력
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/patient">
+                <i class="ni ni-planet text-blue"></i> 환자정보입력
+              </a>
+            </li>
           </ul>
           <!-- Divider -->
           <hr class="my-3" />
@@ -243,7 +248,7 @@
                       <td>
                         <div class="d-flex align-items-center">
                           <span class="mr-2"><button type="button" class="btn btn-sm btn-primary" >
-                            <a th:href="@{|/select/patient/${patient.id}|}">조회</a></button></span>
+                            <a class="btn-primary" th:href="@{|/select/patient/${patient.id}|}">조회</a></button></span>
                           <div></div>
                         </div>
                       </td>
@@ -251,89 +256,6 @@
                   </tbody>
                 </table>
 
-                <!-- 새로운 환자 정보 입력 하는 테이블 -> 입력해야하니까 form 형태로 구성 -->
-                <form action="/" method="post">
-                <div class="col-xl-8 order-xl-1">
-                  <div class="card bg-secondary shadow">
-                    <div class="card-header bg-white border-0">
-                      <div class="row align-items-center">
-                        <div class="col-8">
-                          <h3 class="mb-0">새로운 환자 입력</h3>
-                        </div>
-                        <div class="col-4 text-right">
-                          <a href="/main" class="btn btn-sm btn-primary">정보 입력</a>
-                        </div>
-                      </div>
-                    </div>
-                    <table  class="table align-items-center table-flush">
-                      <div class="card-body">
-                        <thead class="thead-light">
-                          <tr>
-                            <th scope="col"><label class="form-control-label" for="input-username"
-                            >환자 ID</label
-                            ></th>
-                            <th scope="col"> <label
-                                class="form-control-label"
-                                for="input-first-name"
-                            >이름</label
-                            ></th>
-                            <th scope="col"> <label
-                                class="form-control-label"
-                                for="input-first-name"
-                            >나이</label
-                            ></th>
-                            <th scope="col"> <label
-                                class="form-control-label"
-                                for="input-first-name"
-                            >성별</label
-                            ></th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          <tr>
-                            <th scope="row">
-                              <input
-                                  type="text"
-                                  id="input-username"
-                                  class="form-control form-control-alternative"
-                                  placeholder="Patient ID"
-                                  name="id"
-                              />
-                            </th>
-                            <td > <input
-                                type="text"
-                                id="input-first-name"
-                                class="form-control form-control-alternative"
-                                placeholder="이름"
-                                name="patientName"
-                            /></td>
-
-                            <td class="age-tag">
-                              <input
-                                  type="text"
-                                  id="input-first-name"
-                                  class="form-control form-control-alternative"
-                                  placeholder="나이"
-                                  name="patientAge"
-                              />
-                            </td>
-                            <td >
-                              <input
-                                  type="text"
-                                  id="input-first-name"
-                                  class="form-control form-control-alternative"
-                                  placeholder="성별"
-                                  name="patientGender"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </div>
-                    </table>
-                  </div>
-                </div>
-                </form>
               </div>
             </div>
               <div class="card-footer py-4">

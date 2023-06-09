@@ -3,6 +3,8 @@ package com.meditech.members.repository;
 import com.meditech.members.entity.MemberEntity;
 import com.meditech.members.entity.PatientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,4 +15,6 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
     //이거 memberId랑 세션에 저장된 id을 비교하게 되어있는데, 나중에 바꾸기
     List<PatientEntity> findByMemberEntity_Id(Long id);
     Optional<PatientEntity> findById(Long id);
+    @Query("SELECT p.patientName from PatientEntity p WHERE p.id = :id")
+    String findNameById(@Param("id") Long id);
 }

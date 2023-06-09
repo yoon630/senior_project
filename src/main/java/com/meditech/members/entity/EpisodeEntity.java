@@ -29,7 +29,8 @@ public class EpisodeEntity {
     private double s5;
     @Column
     private double s6;
-
+    @Column
+    private double epsilon = 0.9;
     public static EpisodeEntity toEpisodeEntity(EpisodeDTO episodeDTO) {//dto객체->entity객체로 변환
         EpisodeEntity episodeEntity = new EpisodeEntity();
         episodeEntity.setId(episodeDTO.getId());
@@ -39,6 +40,7 @@ public class EpisodeEntity {
         episodeEntity.setS4(episodeDTO.getS4());
         episodeEntity.setS5(episodeDTO.getS5());
         episodeEntity.setS6(episodeDTO.getS6());
+        episodeEntity.setEpsilon(episodeDTO.getEpsilon());
         return episodeEntity;
     }
 }

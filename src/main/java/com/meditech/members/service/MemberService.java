@@ -76,21 +76,22 @@ public class MemberService {
         return patientRecordDTOList;
     }
     private final PatientRecordRepository patientRecordRepository1;
-    public void insert(PatientRecordDTO patientRecordDTO, HttpSession session) throws IOException {
+    public PatientRecordDTO insert(PatientRecordDTO patientRecordDTO, HttpSession session) throws IOException {
+        List<PatientRecordEntity> patientRecordEntityList = patientRecordRepository1.findByIdPatientEntityId(patientRecordDTO.getPatientId());
+        if(!patientRecordEntityList.isEmpty()){//방문내역이 있으면
+            //마지막 레코드 삭제 하는 과정 (어차피 2차 방문부터는 그에 대한 레코드가 이미 생성되어 있으며, 현재가 되는 state값만 확인하면 되므로)
+            patientRecordRepository1.deleteLatestRecordByPatientId(patientRecordDTO.getPatientId());
+            //그후
+            Optional<Integer> latestTurn = patientRecordRepository1.findLatestTurnByPatientId(patientRecordDTO.getPatientId());
+            patientRecordDTO.setTurn(latestTurn.get() + 1);
+        }
+        else{
+            patientRecordDTO.setTurn(1);
+        }
+
         //파일 첨부 여부에 따라 로직 분리
         if(patientRecordDTO.getXRay().isEmpty()&&patientRecordDTO.getUltraSound().isEmpty()){
             //첨부 파일 없음.
-            List<PatientRecordEntity> patientRecordEntityList = patientRecordRepository1.findByIdPatientEntityId(patientRecordDTO.getPatientId());
-            if(!patientRecordEntityList.isEmpty()){//방문내역이 있으면
-                Optional<Integer> latestTurn = patientRecordRepository1.findLatestTurnByPatientId(patientRecordDTO.getPatientId());
-                patientRecordDTO.setTurn(latestTurn.get() + 1);
-            }
-            else{
-                patientRecordDTO.setTurn(1);
-            }
-//        patientRecordDTO.setUltraSound(null);
-//        patientRecordDTO.setXRay(null);
-
             PatientRecordEntity patientRecordEntity = PatientRecordEntity.toInsertEntity(patientRecordDTO, session);
             patientRecordRepository1.save(patientRecordEntity);
         }
@@ -117,10 +118,10 @@ public class MemberService {
             PatientRecordEntity patientRecordEntity = PatientRecordEntity.toInsertFileEntity(patientRecordDTO, session, originalxRayFileName, originalultraSoundFileName, storedxRayFileName, storedultraSoundFileName);
             patientRecordRepository1.save(patientRecordEntity);
         }
+        return patientRecordDTO;
     }
 
-
-    public void register(PatientDTO patientDTO, HttpSession session) {
+    public void register(PatientDTO patientDTO, HttpSession session) throws IOException{
         Optional<PatientEntity> patientEntity = patientRepository.findById(patientDTO.getId());
         if(!patientEntity.isPresent()){//해당 아이디 존재하지 않으면
             patientDTO.setMemberId((long)session.getAttribute("loginId"));
@@ -130,5 +131,10 @@ public class MemberService {
 //        else{
 //
 //        }
+    }
+
+    public String findPatientName(Long patientId) {
+        String patientName = patientRepository.findNameById(patientId);
+        return patientName;
     }
 }

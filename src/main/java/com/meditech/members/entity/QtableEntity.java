@@ -29,4 +29,10 @@ public class QtableEntity {
         qtableEntity.setMaxQ(qtableDTO.getMaxQ());
         return qtableEntity;
     }
+    public static QtableEntity insertQtable(int id, double maxQ){
+        QtableEntity qtableEntity = new QtableEntity();
+        qtableEntity.setId(id);
+        qtableEntity.setMaxQ(maxQ);
+        return qtableEntity;
+    }
 }

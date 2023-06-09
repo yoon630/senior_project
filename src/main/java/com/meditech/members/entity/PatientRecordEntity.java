@@ -41,10 +41,6 @@ public class PatientRecordEntity {
     private int ECG;//심전도 검사
     @Column
     private String bloodPressure;//혈압 최고/최저
-    @Column
-    private String xRay;//x_ray 사진
-    @Column
-    private String ultraSound;//초음파 사진
     @Column(length = 500)
     private String comment;//의사 소견
     @Column
