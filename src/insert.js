@@ -1,11 +1,8 @@
-// import "./css";
+// var popup = document.querySelectorAll(".popup_open");
 
+// popup.addEventListener("click", showPopup);
 // function showPopup() {
-//   window.open(
-//     "08_2_popup.html",
-//     "a",
-//     "width=400, height=300, left=100, top=50"
-//   );
+//   window.open("submit.html", "a", "width=400, height=300, left=100, top=50");
 // }
 
-// export default showPopup;
+// setTimeout(showPopup, 2000);

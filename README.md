@@ -88,3 +88,9 @@ main.css 도 수정햇으므로 이것도 그대로 복붙 바람!!! 안그럼 �
 main.html에서 새로운 환자 정보입력하는 부분 제거했음
 모든 html에서 새로운 환자 정보 입력하는 페이지 목록 버튼 추가했음
 patient.html 추가함
+
+-2023.6.10 토요일 6시 51분 수정-
+detail.html에서 소견 칸 추가
+detail.html에서 x-ray랑 초음파 부분에 id 추가
+위에서 추가한 id 가지고 detail.js 에서 이용
+이거 사용하기 위해 detail.html에서 맨 아래칸에 script로 detail.js 연결하는 부분 써야함!

@@ -3729,7 +3729,7 @@ input[type="button"].btn-block {
 
 .dropdown-item:hover,
 .dropdown-item:focus {
-  color:#8898aa;
+  color: #8898aa;
   text-decoration: none;
 }
 
@@ -14841,7 +14841,7 @@ a.text-lighter:focus {
 
 .avatar {
   color: #fff;
-  background-color: #adb5bd;
+  background-color: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -20770,3 +20770,16 @@ pre > code.highlight {
   font-family: sans-serif;
 }
 /*# sourceMappingURL=dashboard-free.css.map */
+.doctor-name {
+  margin-bottom: 0%;
+  text-align: center;
+  font-size: medium;
+  color: #f5fffa;
+  font-weight: bold;
+  border-left: 1px solid #f5fffa;
+  padding-left: 7px;
+}
+.img-size {
+  width: 400px;
+  height: 300px;
+}

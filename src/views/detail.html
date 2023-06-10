@@ -42,44 +42,7 @@
           <!-- 로고 넣기  -->
           <img src="/public/logo.png" class="navbar-brand-img" alt="..." />
         </a>
-        <!-- User -->
-        <ul class="nav align-items-center d-md-none">
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link nav-link-icon"
-              href="#"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="ni ni-bell-55"></i>
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link"
-              href="#"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <div class="media align-items-center">
-                <a href="/index">
-                  <i class="ni ni-user-run"></i>
-                  <span>Logout</span>
-                </a>
-              </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-              <a href="/index" class="dropdown-item">
-                <i class="ni ni-user-run"></i>
-                <span>Logout</span>
-              </a>
-            </div>
-          </li>
-        </ul>
+
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
           <!-- Collapse header -->
@@ -156,18 +119,7 @@
           <!-- Form -->
           <form
             class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"
-          >
-            <div class="form-group mb-0">
-              <div class="input-group input-group-alternative">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"
-                    ><i class="fas fa-search"></i
-                  ></span>
-                </div>
-                <input class="form-control" placeholder="Search" type="text" />
-              </div>
-            </div>
-          </form>
+          ></form>
           <!-- User -->
           <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
@@ -180,6 +132,18 @@
                 aria-expanded="false"
               >
               </a>
+              <div class="media align-items-center">
+                <span class="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder" src="/public/doctor.png" />
+                </span>
+                <div class="media-body ml-2 d-none d-lg-block">
+                  <span class="mb-0 text-sm font-weight-bold"
+                    ><p class="doctor-name" th:text="${session.loginName}">
+                      의사1
+                    </p></span
+                  >
+                </div>
+              </div>
               <div class="media-body ml-2 d-none d-lg-block">
                 <a href="/logout" class="dropdown-item">
                   <span>Logout</span>
@@ -215,6 +179,7 @@
                       <th scope="col">혈압</th>
                       <th scope="col">x-ray</th>
                       <th scope="col">초음파</th>
+                      <th scope="col">소견</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -239,17 +204,21 @@
                       <td th:text="${patient.bloodPressure}"></td>
                       <td>
                         <img
+                          class="img-size"
+                          id="xray-img"
                           th:src="@{${'data:image/png;base64,' + patient.xRay}}"
                           alt="X-Ray"
                         />
                       </td>
                       <td>
                         <img
+                          class="img-size"
+                          id="xray-img"
                           th:src="@{${'data:image/png;base64,' + patient.ultraSound}}"
                           alt="UltraSound"
                         />
                       </td>
-
+                      <td th:text="${patient.comment}"></td>
                       <td th:href="@{|/select/patient/${patient.id}|}">
                         <div class="d-flex align-items-center">
                           <span class="mr-2"><button>조회</button></span>
@@ -282,18 +251,6 @@
       </div>
     </div>
     <!--   Core   -->
-    <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!--   Optional JS   -->
-    <!--   Argon JS   -->
-    <script src="../assets/js/argon-dashboard.min.js?v=1.1.2"></script>
-    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-    <script>
-      window.TrackJS &&
-        TrackJS.install({
-          token: "ee6fab19c5a04ac1a32a645abde4613a",
-          application: "argon-dashboard-free",
-        });
-    </script>
+    <script src="/src/detail.js"></script>
   </body>
 </html>

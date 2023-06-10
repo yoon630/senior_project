@@ -54,7 +54,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="../index.html">
+        <a class="navbar-brand pt-0" href="/main">
           <img src="/public/logo.png" class="navbar-brand-img" alt="..." />
         </a>
         <!-- User -->
@@ -217,7 +217,10 @@
                     <h3 class="mb-0">새로운 환자 입력</h3>
                   </div>
                   <div class="col-4 text-right">
-                    <a href="/" class="btn btn-sm btn-primary">정보 입력</a>
+                    <form method ="post" action="/patient">
+                    <button href="/" class="btn btn-sm btn-primary" type="submit"
+                      >정보 입력</button
+                    >
                   </div>
                 </div>
               </div>
@@ -291,6 +294,7 @@
                   </tbody>
                 </div>
               </table>
+            </form>
             </div>
           </div>
         </div>

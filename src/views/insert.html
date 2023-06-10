@@ -25,12 +25,15 @@
 
     <!-- 팝업창 호출 -->
     <script language="javascript">
-      function showPopup() {
+      function start() {
         window.open(
           "submit.html",
-          "a",
+          "Q-learning result",
           "width=400, height=300, left=100, top=50"
         );
+      }
+      function showPopup() {
+        setTimeout(start(), 2000);
       }
     </script>
   </head>
@@ -54,7 +57,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand pt-0" href="../index.html">
+        <a class="navbar-brand pt-0" href="/main">
           <img src="/public/logo.png" class="navbar-brand-img" alt="..." />
         </a>
         <!-- User -->
@@ -170,6 +173,11 @@
                 <i class="ni ni-planet text-blue"></i> 환자정보입력
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/main">
+                <i class="ni ni-planet text-blue"></i> 환자조회
+              </a>
+            </li>
           </ul>
           <!-- Divider -->
           <hr class="my-3" />
@@ -223,13 +231,14 @@
                         class="submit"
                         type="submit"
                         value="Submit"
-                        onclick="showPopup();"
+                        id="popup"
+                        onclick="setTimeout(showPopup(),2000)"
                     /></a>
                   </div>
                 </div>
               </div>
               <div class="card-body">
-                <form>
+                <form id="myform">
                   <h6 class="heading-small text-muted mb-4">
                     Patient information
                   </h6>
@@ -327,7 +336,7 @@
                           >
                           <input
                             type="file"
-                            id="input-city"
+                            id="input-xray"
                             class="form-control form-control-alternative"
                             placeholder=""
                             name=""
@@ -341,7 +350,7 @@
                           >
                           <input
                             type="file"
-                            id="input-country"
+                            id="input-xray"
                             class="form-control form-control-alternative"
                             placeholder=""
                             name=""
@@ -383,12 +392,12 @@
       </div>
     </div>
     <!--   Core   -->
-    <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
+    <!-- <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
     <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!--   Optional JS   -->
     <!--   Argon JS   -->
-    <script src="../assets/js/argon-dashboard.min.js?v=1.1.2"></script>
-    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <!-- <script src="../assets/js/argon-dashboard.min.js?v=1.1.2"></script>
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script> -->
     <script>
       window.TrackJS &&
         TrackJS.install({
@@ -396,5 +405,6 @@
           application: "argon-dashboard-free",
         });
     </script>
+    <script src="/src/insert.js"></script>
   </body>
 </html>
