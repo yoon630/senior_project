@@ -335,12 +335,16 @@ public class QlearningService {
         }
 
         // Q-Table 업데이트
-        double maxNextQValue = qTable[nextState][ACTION[nextState][0]];
-        for (int j = 1; j < ACTION[nextState].length; j++) {
-            if (qTable[nextState][ACTION[nextState][j]] > maxNextQValue) {
-                maxNextQValue = qTable[nextState][ACTION[nextState][j]];
+        double maxNextQValue;
+        if(nextState < 6 ){
+            maxNextQValue = qTable[nextState][ACTION[nextState][0]];
+            for(int j=1; j<ACTION[nextState].length; j++){
+                if (qTable[nextState][ACTION[nextState][j]] > maxNextQValue) {
+                    maxNextQValue = qTable[nextState][ACTION[nextState][j]];
+                }
             }
         }
+        else maxNextQValue = 0.0;
         qTable[state][action] += alpha * (reward + gamma * maxNextQValue - qTable[state][action]);
 
         policy.updateEpsilon(decayRate, minEpsilon); //epsilon 업데이트
@@ -392,7 +396,7 @@ public class QlearningService {
         //action, reward 값 추가 업데이트
         patientRecordRepository.updateRewardAndAction(patientRecordDTO.getPatientId(), patientRecordDTO.getTurn(), reward, action+1);
         //다음 방문 회차에 next state 저장
-        Optional<Integer> latestTurn = patientRecordRepository.findLatestTurnByPatientId(patientRecordDTO.getPatientId());
+        int latestTurn = patientRecordRepository.findMaxTurn(patientRecordDTO.getPatientId());
         PatientRecordEntity patientRecordEntity = new PatientRecordEntity();
         Long patientId = patientRecordDTO.getPatientId();//long
         PatientEntity patientEntity = new PatientEntity();
@@ -402,7 +406,7 @@ public class QlearningService {
         patientEntity.setMemberEntity(memberEntity);
         PatientRecordId recordId = new PatientRecordId();
         recordId.setPatientEntity(patientEntity);//patient id를 가져오기 위한 patientEntity타입
-        recordId.setTurn(latestTurn.orElse(0)+1);
+        recordId.setTurn(latestTurn+1);
 
         patientRecordEntity.setId(recordId);
         patientRecordEntity.setState(nextState+1);//id와 nextstate만을 담은 entity객체 생성 완료
@@ -427,7 +431,7 @@ public class QlearningService {
         session.setAttribute("patientAction",action+1);
         session.setAttribute("patientReward",reward);
         session.setAttribute("patientNextState",nextState+1);
-
+        session.setAttribute("Qvalue",qTable[state][action]);
     }
 
         //!!!!!!!!!!!!DB에 반환할 내용 정리!!!!!!!!!!!

@@ -113,6 +113,12 @@ public class HomeController {
     @GetMapping("/submit")//???
     public String showPopup(HttpSession session){
         //걍 세션에 있는 값만 넘겨줘도 될듯?
+//        session.setAttribute("patientAction",action+1);
+//        session.setAttribute("patientReward",reward);
+//        session.setAttribute("patientNextState",nextState+1);
+//        session.setAttribute("Qvalue",qTable[state][action]);
+        //세션에 있는 값들 확인하기
+        //session.Qvalue 넘겨주면 됨
         return "submit.html";
     }
     @GetMapping("/select/data")

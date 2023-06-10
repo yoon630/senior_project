@@ -80,10 +80,12 @@ public class MemberService {
         List<PatientRecordEntity> patientRecordEntityList = patientRecordRepository1.findByIdPatientEntityId(patientRecordDTO.getPatientId());
         if(!patientRecordEntityList.isEmpty()){//방문내역이 있으면
             //마지막 레코드 삭제 하는 과정 (어차피 2차 방문부터는 그에 대한 레코드가 이미 생성되어 있으며, 현재가 되는 state값만 확인하면 되므로)
-            patientRecordRepository1.deleteLatestRecordByPatientId(patientRecordDTO.getPatientId());
+            int latestTurn = patientRecordRepository1.findMaxTurn(patientRecordDTO.getPatientId());
+            System.out.println("latestTurn: " + latestTurn); // 콘솔 출력
+            patientRecordRepository1.deleteLatestRecordByPatientId(patientRecordDTO.getPatientId(), latestTurn);
             //그후
-            Optional<Integer> latestTurn = patientRecordRepository1.findLatestTurnByPatientId(patientRecordDTO.getPatientId());
-            patientRecordDTO.setTurn(latestTurn.get() + 1);
+            latestTurn = patientRecordRepository1.findMaxTurn(patientRecordDTO.getPatientId());
+            patientRecordDTO.setTurn(latestTurn + 1);
         }
         else{
             patientRecordDTO.setTurn(1);
