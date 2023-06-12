@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -22,6 +22,7 @@
     />
     <!-- CSS Files -->
     <link href="/static/css/submit.css" rel="stylesheet" />
+    <script src="/static/js/submit.js"></script>
   </head>
 
   <body class="">
@@ -40,37 +41,226 @@
               <div class="pl-lg-4">
                 <div class="row">
                   <div class="col-lg-6">
-                    <div class="form-group">
-                      <td>
-                        <label class="form-control-label"
-                          >Action</label>
-                      </td>
-                    </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-lg-6">
-                    <div class="form-group">
-                      <td><label class="form-control-label">Reward</label></td>
-                    </div>
                   </div>
                   <div class="col-lg-6">
-                    <div class="form-group">
-                      <td><label class="form-control-label">State</label></td>
+                    <div class="popup-name" style="font-weight: bold; font-size: large;">
+                      <span th:text="${patientName}" class="popup-name" style="font-weight: bold; font-size: large;"></span>
+                      <span  class="popup-name" style="font-weight: bold; font-size: large;">님의 현재 상태(<span>
+                      <span th:text="${patientRecordDTO.state}"  class="popup-name" style="font-weight: bold; font-size: large;"></span>
+                      <span  class="popup-name" style="font-weight: bold; font-size: large;">)에서</span>
+                      <span
+                          id="action"
+                          class="popup-name" style="font-weight: bold; font-size: large;"
+                      ></span>
+                      <span class="popup-name" style="font-weight: bold; font-size: large;">를 취할 수 있습니다.</span>
+                    </div>
+                    <div class="table-responsive">
+                      <!-- Projects table -->
+                      <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                          <tr>
+                            <th scope="col"></th>
+                            <th scope="col">a1</th>
+                            <th scope="col">a2</th>
+                            <th scope="col">a3</th>
+                            <th scope="col">a4</th>
+                            <th scope="col">a5</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th scope="row">s1</th>
+                            <td th:text="${qtableDTO0.maxQ}"></td>
+                            <td th:text="${qtableDTO1.maxQ}"></td>
+                            <td>-</td>
+                            <td th:text="${qtableDTO2.maxQ}"></td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">s2</th>
+                            <td th:text="${qtableDTO3.maxQ}"></td>
+                            <td th:text="${qtableDTO4.maxQ}"></td>
+                            <td>-</td>
+                            <td th:text="${qtableDTO5.maxQ}"></td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">s3</th>
+                            <td>-</td>
+                            <td>-</td>
+                            <td th:text="${qtableDTO6.maxQ}"></td>
+                            <td th:text="${qtableDTO7.maxQ}"></td>
+                            <td>-</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">s4</th>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td th:text="${qtableDTO8.maxQ}"></td>
+                            <td th:text="${qtableDTO9.maxQ}"></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">s5</th>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td th:text="${qtableDTO10.maxQ}"></td>
+                            <td th:text="${qtableDTO11.maxQ}"></td>
+                          </tr>
+                          <tr>
+                            <th scope="row">s6</th>
+                            <td>-</td>
+                            <td th:text="${qtableDTO12.maxQ}"></td>
+                            <td th:text="${qtableDTO13.maxQ}"></td>
+                            <td>-</td>
+                            <td>-</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="popup-name" style="font-weight: bold; font-size: large;">
+                      <span id="q1"></span>
+                      <span id="q1-state"></span>
+<!--                      <script>-->
+<!--                            var stateValue = "${patientRecordDTO.state}";-->
+<!--                            function q1(state){-->
+<!--                              if(state ==="1"){-->
+<!--                                document.getElementById("q1-state").innerHTML = "${qtableDTO0.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="2"){-->
+<!--                                document.getElementById("q1-state").innerHTML = "${qtableDTO3.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="3"){-->
+<!--                                document.getElementById("q1-state").innerHTML = "${qtableDTO6.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="4"){-->
+<!--                                document.getElementById("q1-state").innerHTML = "${qtableDTO8.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="5"){-->
+<!--                                document.getElementById("q1-state").innerHTML = "${qtableDTO10.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="6"){-->
+<!--                                document.getElementById("q1-state").innerHTML = "${qtableDTO12.maxQ}"-->
+<!--                              }-->
+<!--                            }-->
+<!--                            q1(stateValue);-->
+<!--                      </script>-->
+                      <span id="q2"></span>
+                      <span id="q2-state"></span>
+<!--                      <script>-->
+<!--                            function q2(state){-->
+<!--                              if(state ==="1"){-->
+<!--                                document.getElementById("q2-state").innerHTML = "${qtableDTO1.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="2"){-->
+<!--                                document.getElementById("q2-state").innerHTML = "${qtableDTO4.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="3"){-->
+<!--                                document.getElementById("q2-state").innerHTML = "${qtableDTO7.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="4"){-->
+<!--                                document.getElementById("q2-state").innerHTML = "${qtableDTO9.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="5"){-->
+<!--                                document.getElementById("q2-state").innerHTML = "${qtableDTO11.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="6"){-->
+<!--                                document.getElementById("q2-state").innerHTML = "${qtableDTO13.maxQ}"-->
+<!--                              }-->
+<!--                            }-->
+<!--                            q2(stateValue);-->
+<!--                      </script>-->
+                      <span id="q3"></span>
+                      <span id="q3-state"></span>
+<!--                      <script>-->
+<!--                            var state = "${patientRecordDTO.state}";-->
+<!--                            function q3(state){-->
+<!--                              if(state ==="1"){-->
+<!--                                document.getElementById("q3-state").innerHTML = "${qtableDTO2.maxQ}"-->
+<!--                              }-->
+<!--                              else if(state ==="2"){-->
+<!--                                document.getElementById("q3-state").innerHTML = "${qtableDTO5.maxQ}"-->
+<!--                              }-->
+<!--                            }-->
+<!--                            q3(stateValue);-->
+<!--                      </script>-->
+                      <span  class="popup-name" style="font-weight: bold; font-size: large;">Action</span>
+                      <span th:text="${patientRecordDTO.action}"  class="popup-name" style="font-weight: bold; font-size: large;"></span>을 실행해주세요.
                     </div>
                   </div>
                 </div>
               </div>
             </tr>
-            <tr>
-<!--              이거 맞나?-->
-              <td text="${session.patientAction}"></td>
-              <td text="${session.patientReward}"></td>
-              <td text="${session.patientNextState}"></td>
-            </tr>
           </table>
         </div>
       </div>
     </div>
+    <script>
+
+                            var stateValue = "${patientRecordDTO.state}";
+    // JavaScript 파일에서 이벤트 핸들러 등록
+      document.addEventListener("DOMContentLoaded", function() {
+      stateResult(stateValue);
+      });
+                            function q1(state){
+                              if(state ==="1"){
+                                document.getElementById("q1-state").innerText = "${qtableDTO0.maxQ}"
+                              }
+                              else if(state ==="2"){
+                                document.getElementById("q1-state").innerText = "${qtableDTO3.maxQ}"
+                              }
+                              else if(state ==="3"){
+                                document.getElementById("q1-state").innerText = "${qtableDTO6.maxQ}"
+                              }
+                              else if(state ==="4"){
+                                document.getElementById("q1-state").innerText = "${qtableDTO8.maxQ}"
+                              }
+                              else if(state ==="5"){
+                                document.getElementById("q1-state").innerText = "${qtableDTO10.maxQ}"
+                              }
+                              else if(state ==="6"){
+                                document.getElementById("q1-state").innerText= "${qtableDTO12.maxQ}"
+                              }
+                            }
+                            q1(stateValue);
+
+                            function q2(state){
+                              if(state ==="1"){
+                                document.getElementById("q2-state").innerText = "${qtableDTO1.maxQ}"
+                              }
+                              else if(state ==="2"){
+                                document.getElementById("q2-state").innerText = "${qtableDTO4.maxQ}"
+                              }
+                              else if(state ==="3"){
+                                document.getElementById("q2-state").innerText = "${qtableDTO7.maxQ}"
+                              }
+                              else if(state ==="4"){
+                                document.getElementById("q2-state").innerText = "${qtableDTO9.maxQ}"
+                              }
+                              else if(state ==="5"){
+                                document.getElementById("q2-state").innerText = "${qtableDTO11.maxQ}"
+                              }
+                              else if(state ==="6"){
+                                document.getElementById("q2-state").innerText = "${qtableDTO13.maxQ}"
+                              }
+                            }
+                            q2(stateValue);
+
+                            function q3(state){
+                              if(state ==="1"){
+                                document.getElementById("q3-state").innerText = "${qtableDTO2.maxQ}"
+                              }
+                              else if(state ==="2"){
+                                document.getElementById("q3-state").innerText = "${qtableDTO5.maxQ}"
+                              }
+                            }
+                            q3(stateValue);
+
+   </script>
   </body>
 </html>

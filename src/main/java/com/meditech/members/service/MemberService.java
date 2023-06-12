@@ -1,15 +1,10 @@
 package com.meditech.members.service;
 
-import com.meditech.members.dto.MemberDTO;
-import com.meditech.members.dto.PatientDTO;//나중에 PatientService만들어서 옮겨도 됨
-import com.meditech.members.dto.PatientRecordDTO;
-import com.meditech.members.entity.MemberEntity;
-import com.meditech.members.entity.PatientEntity;
-import com.meditech.members.entity.PatientRecordEntity;
-import com.meditech.members.repository.MemberRepository;
-import com.meditech.members.repository.PatientRecordRepository;
-import com.meditech.members.repository.PatientRepository;
+import com.meditech.members.dto.*;
+import com.meditech.members.entity.*;
+import com.meditech.members.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -139,4 +134,70 @@ public class MemberService {
         String patientName = patientRepository.findNameById(patientId);
         return patientName;
     }
+
+    private final QtableRepository qtableRepository;
+    public PatientRecordDTO findResult(Long id) {//현재 환자 id로 결과 가져오기
+        int turn = patientRecordRepository.findMaxTurn(id);
+        PatientRecordEntity patientRecordEntity = patientRecordRepository.findByIdPatientEntityId2(id, turn-1);
+        PatientRecordDTO patientRecordDTO = PatientRecordDTO.toDTO(patientRecordEntity);
+        return patientRecordDTO;
+    }
+
+//    public Double findMaxQ(int state, int action){
+//        Double maxQ = qtableRepository.findMaxQ(state*10+action).orElse(0.0);
+//        return maxQ;
+//    }
+
+    public List<QtableDTO> allMaxQ() {
+        List<QtableEntity> qtableEntityList = qtableRepository.findAll();
+        List<QtableDTO> qtableDTOList = new ArrayList<>();
+        for(QtableEntity qtableEntity: qtableEntityList){
+            qtableDTOList.add(QtableDTO.toQtableDTO(qtableEntity));
+        }
+        return qtableDTOList;
+    }
+
+    private final EpisodeRepository episodeRepository;
+//    public List<EpisodeDTO> allEpsiode() {
+//        List<EpisodeEntity> episodeEntityList = episodeRepository.findAll();
+//        List<EpisodeDTO> episodeDTOList = new ArrayList<>();
+//        for(EpisodeEntity episodeEntity: episodeEntityList){
+//            episodeDTOList.add(EpisodeDTO.toEpisodeDTO(episodeEntity));
+//        }
+//        return episodeDTOList;
+//    }
+
+    public List<Double> allEpsilon() {
+        List<Double> epsilonList = episodeRepository.findAllEpsilons();
+        return epsilonList;
+    }
+    public List<Integer> allId() {
+        List<Integer> idList = episodeRepository.findAllId();
+        return idList;
+    }
+    public List<Double> allS1() {
+        List<Double> s1List = episodeRepository.findAllS1();
+        return s1List;
+    }
+    public List<Double> allS2() {
+        List<Double> s2List = episodeRepository.findAllS2();
+        return s2List;
+    }
+    public List<Double> allS3() {
+        List<Double> s3List = episodeRepository.findAllS3();
+        return s3List;
+    }
+    public List<Double> allS4() {
+        List<Double> s4List = episodeRepository.findAllS4();
+        return s4List;
+    }
+    public List<Double> allS5() {
+        List<Double> s5List = episodeRepository.findAllS5();
+        return s5List;
+    }
+    public List<Double> allS6() {
+        List<Double> s6List = episodeRepository.findAllS6();
+        return s6List;
+    }
+
 }

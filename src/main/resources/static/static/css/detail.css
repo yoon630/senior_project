@@ -18507,8 +18507,8 @@ textarea[resize="horizontal"] {
 
 .card .table td,
 .card .table th {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 0.6rem;
 }
 
 p {
@@ -20768,5 +20768,18 @@ pre > code.highlight {
 .age-tag {
   font-size: 10px;
   font-family: sans-serif;
+}
+.doctor-name {
+  margin-bottom: 0%;
+  text-align: center;
+  font-size: medium;
+  color: #f5fffa;
+  font-weight: bold;
+  border-left: 1px solid #f5fffa;
+  padding-left: 7px;
+}
+.img-size {
+    width: 400px;
+    height: 300px;
 }
 /*# sourceMappingURL=dashboard-free.css.map */

@@ -22,17 +22,28 @@
     />
     <!-- CSS Files -->
     <link href="/static/css/insert.css" rel="stylesheet" />
-
-    <!-- 팝업창 호출 -->
-    <script language="javascript">
-      function showPopup() {
-        window.open(
-          "submit",
-          "a",
-          "width=400, height=300, left=100, top=50, location=no"
-        );
-      }
-    </script>
+<!--    여기에 다시 코드 넣어봐-->
+<!--     팝업창 호출 -->
+<!--        <script>-->
+<!--        function showPopup() {-->
+<!--                setTimeout(() => {-->
+<!--                    window.open(-->
+<!--                        "/submit",-->
+<!--                        "a",-->
+<!--                        "width=400, height=300, left=100, top=50, location=no"-->
+<!--                    );-->
+<!--                }, 2000); // 2초(2000밀리초) 후에 팝업 창 열기-->
+<!--            }-->
+<!--        </script>-->
+         <script>
+          function showPopup() {
+            window.open(
+              "/submit",
+              "a",
+              "width=800, height=500, left=100, top=50, location=no"
+            );
+          }
+        </script>
   </head>
 
   <body class="insert">
@@ -220,14 +231,27 @@
                     <!-- submit 버튼 부분 연구가 필요해... 일단 주소를 지정해야해... 근데 무슨 주소지.. 버튼 누르면 원래창은 insert페이지 유지 -->
 <!--                    action="/insert"-->
                     <form action="/insert" method="post" enctype="multipart/form-data"> <!--파일 경로 넘기기위한-->
-                      <a href="/submit"
-                      ><input
+                      <a href="/submit">
+                        <input
                           class="submit"
                           type="submit"
                           value="Submit"
                           onclick="showPopup();"
-                      /></a>
-
+                      />
+                      </a>
+                      <!-- 팝업창 호출 -->
+<!--                      <script>-->
+<!--                        function showPopup() {-->
+<!--                          setTimeout(() => {-->
+<!--                           window.open(-->
+<!--                           "/submit",-->
+<!--                           "a",-->
+<!--                           "width=400, height=300, left=100, top=50, location=no"-->
+<!--                           );-->
+<!--                          }, 2000); // 2초(2000밀리초) 후에 팝업 창 열기-->
+<!--                          console.log("Function called");-->
+<!--                        }-->
+<!--                      </script>-->
 
                   </div>
                 </div>

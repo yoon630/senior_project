@@ -227,7 +227,7 @@
                   </span>
                   <div class="media-body ml-2 d-none d-lg-block">
                     <span class="mb-0 text-sm font-weight-bold">
-                      <p th:text="${session.loginName}"></p>
+                      <p class="doctor-name" th:text="${session.loginName}"></p>
                     </span>
                   </div>
                 </div>
@@ -290,6 +290,7 @@
                       <th scope="col">혈압</th>
                       <th scope="col">x-ray</th>
                       <th scope="col">초음파</th>
+                      <th scope="col">소견</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -305,16 +306,21 @@
                       <td th:text="${patient.bloodPressure}"></td>
                       <td>
                         <img
+                            class="img-size"
+                            id="xray-img"
                           th:src="@{|/upload/${patient.storedxRayFileName}|}"
-                          alt="X-Ray"
+                          alt="파일 없음"
                         />
                       </td>
                       <td>
                         <img
+                            class="img-size"
+                            id="xray-img"
                           th:src="@{|/upload/${patient.storedultraSoundFileName}|}"
-                          alt="UltraSound"
+                          alt="파일 없음"
                         />
                       </td>
+                      <td th:text="${patient.comment}"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -341,18 +347,6 @@
       </div>
     </div>
     <!--   Core   -->
-    <script src="../assets/js/plugins/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <!--   Optional JS   -->
-    <!--   Argon JS   -->
-    <script src="../assets/js/argon-dashboard.min.js?v=1.1.2"></script>
-    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-    <script>
-      window.TrackJS &&
-        TrackJS.install({
-          token: "ee6fab19c5a04ac1a32a645abde4613a",
-          application: "argon-dashboard-free",
-        });
-    </script>
+    <script src="/static/js/detail.js"></script>
   </body>
 </html>

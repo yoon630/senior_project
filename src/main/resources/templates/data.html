@@ -25,9 +25,13 @@
 		href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
 		rel="stylesheet"
 	/>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-<body id="data">
+<body id="data" onload="processData()">
 <nav
 	class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white"
 	id="sidenav-main"
@@ -213,47 +217,7 @@
 	</nav>
 	<!-- 여기서 부터 그래프 보이는 부분  -->
 	<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-		<div class="container-fluid">
-			<div class="header-body">
-				<!-- Card stats -->
-				<div class="row">
-					<div class="col-xl-3 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0">
-							<div class="card-body">
-								<div class="row">
-									<div class="col">
-										<h5 class="card-title text-uppercase text-muted mb-0">
-											환자 ID
-										</h5>
-										<span
-											class="h2 font-weight-bold mb-0"
-											text="${patient.id}"
-										></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-6">
-						<div class="card card-stats mb-4 mb-xl-0">
-							<div class="card-body">
-								<div class="row">
-									<div class="col">
-										<h5 class="card-title text-uppercase text-muted mb-0">
-											Last Q-learning 시점
-										</h5>
-										<span
-											class="h2 font-weight-bold mb-0"
-											text="{patient_record_table.visit_date} "
-										></span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<div class="container-fluid"></div>
 	</div>
 	<div class="container-fluid mt--7">
 		<div class="row">
@@ -269,51 +233,109 @@
 							</div>
 							<div class="col">
 								<ul class="nav nav-pills justify-content-end">
-									<li
-										class="nav-item mr-2 mr-md-0"
-										data-toggle="chart"
-										data-target="#chart-sales"
-										data-update='{"data":{"datasets":[{"data":[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}'
-										data-prefix="$"
-										data-suffix="k"
-									>
+									<li class="nav-item mr-2 mr-md-0">
 										<a
 											href="#"
 											class="nav-link py-2 px-3 active"
 											data-toggle="tab"
 										>
-											<span class="d-none d-md-block">Episode</span>
-											<span class="d-md-none">E</span>
+											<span class="d-none d-md-block">epsilon</span>
 										</a>
 									</li>
-									<li
-										class="nav-item"
-										data-toggle="chart"
-										data-target="#chart-sales"
-										data-update='{"data":{"datasets":[{"data":[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}'
-										data-prefix="$"
-										data-suffix="k"
-									>
+									<li class="nav-item">
 										<a
 											href="#"
 											class="nav-link py-2 px-3"
 											data-toggle="tab"
 										>
 											<span class="d-none d-md-block">Max Q</span>
-											<span class="d-md-none">Q</span>
 										</a>
 									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div class="card-body">
-						<!-- Chart -->
-						<div class="chart">
-							<!-- Chart wrapper -->
-							<canvas id="chart-sales" class="chart-canvas"></canvas>
-						</div>
+					<div style="width: 100%; height: 500px">
+						<canvas id="myChart"></canvas>
 					</div>
+					<script>
+	                var xAxisData = [${epsilonList[0]}]; // x축 데이터
+	                var y1AxisData = []; // Epsilon 데이터
+	                var y2AxisData = []; // Max Q 데이터
+
+	                var jsonEpsilonList = $(jsonEpsilonList);
+	                jsonEpsilonList.forEach(function(item){
+	                    console.log(item);
+	                });
+
+                function drawChart() {
+                  var context = document
+                    .getElementById("myChart")
+                    .getContext("2d");
+
+                  var myChart = new Chart(context, {
+                    type: "line", // 차트의 형태
+                    data: {
+                      // 차트에 들어갈 데이터
+                      labels: xAxisData, //x축 데이터
+                      datasets: [
+                        {
+                          //데이터
+                          label: "Epsilon", //차트 제목
+                          data: y1AxisData, //${episode_table.epsilon}
+                          yAxisID: "Epsilon", //첫번째 y축 이름
+                          backgroundColor: [
+                            //색상
+                            "rgba(255, 99, 132, 0.2)",
+                          ],
+                          borderColor: [
+                            //경계선 색상
+                            "rgba(237, 231, 126, 1)",
+                          ],
+                          borderWidth: 3, //경계선 굵기
+                        },
+                        {
+                          //데이터
+                          label: "Max Q", //차트 제목
+                          data: y2AxisData,
+                          yAxisID: "max Q", //두번째 y축 이름
+                          backgroundColor: [
+                            //색상
+                            "rgba(255, 99, 132, 0.2)",
+                          ],
+                          borderColor: [
+                            //경계선 색상
+                            "rgba(237, 130, 201, 1)",
+                          ],
+                          borderWidth: 3, //경계선 굵기
+                        },
+                      ],
+                    },
+                    options: {
+                      scales: {
+                        y: [
+                          {
+                            id: "Epsilon",
+                            position: "left",
+                            ticks: {},
+                          },
+                          {
+                            id: "max Q",
+                            position: "right",
+                            type: "exponential",
+                            ticks: {
+                              beginAtZero: true,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  });
+                }
+                window.onload = function () {
+                  fetchDataAndDrawChart();
+                };
+              </script>
 				</div>
 			</div>
 			<div class="col-xl-4">
@@ -344,7 +366,7 @@
 					<div class="card-header border-0">
 						<div class="row align-items-center">
 							<div class="col">
-								<h3 class="mb-0">해당 환자 임상시험 History</h3>
+								<h3 class="mb-0">현재 학습된 Q-Table</h3>
 							</div>
 						</div>
 					</div>
@@ -353,150 +375,62 @@
 						<table class="table align-items-center table-flush">
 							<thead class="thead-light">
 								<tr>
-									<th scope="col">id</th>
-									<th scope="col">방문회차</th>
-									<th scope="col">방문날짜</th>
-									<th scope="col">현재 state</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr th:each="patient:  ${patientRecordList}">
-									<th scope="row" th:text="${patient.patientId}">
-										1234567890
-									</th>
-									<td th:text="${patient.turn}">1</td>
-									<td th:text="${patient.visitDate}">2023-05-21</td>
-									<td th:text="${patient.state}">S1</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-			<div class="col-xl-4">
-				<div class="card shadow">
-					<div class="card-header border-0">
-						<div class="row align-items-center">
-							<div class="col">
-								<h3 class="mb-0">임상 시험 진행 상황</h3>
-							</div>
-						</div>
-					</div>
-					<div class="table-responsive">
-						<!-- Projects table -->
-						<table class="table align-items-center table-flush">
-							<thead class="thead-light">
-								<tr>
-									<th scope="col">질병명</th>
-									<th scope="col">실험 횟수</th>
 									<th scope="col"></th>
+									<th scope="col">a1</th>
+									<th scope="col">a2</th>
+									<th scope="col">a3</th>
+									<th scope="col">a4</th>
+									<th scope="col">a5</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<th scope="row">COVID 19</th>
-									<td>300</td>
-									<td>
-										<div class="d-flex align-items-center">
-											<span class="mr-2">70%</span>
-											<div>
-												<div class="progress">
-													<div
-														class="progress-bar bg-gradient-danger"
-														role="progressbar"
-														aria-valuenow="60"
-														aria-valuemin="0"
-														aria-valuemax="100"
-														style="width: 70%"
-													></div>
-												</div>
-											</div>
-										</div>
-									</td>
+									<th scope="row">s1</th>
+									<td th:text="${qtableDTO0.maxQ}"></td>
+									<td th:text="${qtableDTO1.maxQ}"></td>
+									<td>-</td>
+									<td th:text="${qtableDTO2.maxQ}"></td>
+									<td>-</td>
 								</tr>
 								<tr>
-									<th scope="row">위염</th>
-									<td>204</td>
-									<td>
-										<div class="d-flex align-items-center">
-											<span class="mr-2">60%</span>
-											<div>
-												<div class="progress">
-													<div
-														class="progress-bar bg-gradient-success"
-														role="progressbar"
-														aria-valuenow="70"
-														aria-valuemin="0"
-														aria-valuemax="100"
-														style="width: 60%"
-													></div>
-												</div>
-											</div>
-										</div>
-									</td>
+									<th scope="row">s2</th>
+									<td th:text="${qtableDTO3.maxQ}"></td>
+									<td th:text="${qtableDTO4.maxQ}"></td>
+									<td>-</td>
+									<td th:text="${qtableDTO5.maxQ}"></td>
+									<td>-</td>
 								</tr>
 								<tr>
-									<th scope="row">갑상선 암</th>
-									<td>4,800</td>
-									<td>
-										<div class="d-flex align-items-center">
-											<span class="mr-2">80%</span>
-											<div>
-												<div class="progress">
-													<div
-														class="progress-bar bg-gradient-primary"
-														role="progressbar"
-														aria-valuenow="80"
-														aria-valuemin="0"
-														aria-valuemax="100"
-														style="width: 80%"
-													></div>
-												</div>
-											</div>
-										</div>
-									</td>
+									<th scope="row">s3</th>
+									<td>-</td>
+									<td>-</td>
+									<td th:text="${qtableDTO6.maxQ}"></td>
+									<td th:text="${qtableDTO7.maxQ}"></td>
+									<td>-</td>
 								</tr>
 								<tr>
-									<th scope="row">관절염</th>
-									<td>3,678</td>
-									<td>
-										<div class="d-flex align-items-center">
-											<span class="mr-2">55%</span>
-											<div>
-												<div class="progress">
-													<div
-														class="progress-bar bg-gradient-info"
-														role="progressbar"
-														aria-valuenow="75"
-														aria-valuemin="0"
-														aria-valuemax="100"
-														style="width: 55%"
-													></div>
-												</div>
-											</div>
-										</div>
-									</td>
+									<th scope="row">s4</th>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td th:text="${qtableDTO8.maxQ}"></td>
+									<td th:text="${qtableDTO9.maxQ}"></td>
 								</tr>
 								<tr>
-									<th scope="row">장염</th>
-									<td>2450</td>
-									<td>
-										<div class="d-flex align-items-center">
-											<span class="mr-2">90%</span>
-											<div>
-												<div class="progress">
-													<div
-														class="progress-bar bg-gradient-warning"
-														role="progressbar"
-														aria-valuenow="30"
-														aria-valuemin="0"
-														aria-valuemax="100"
-														style="width: 90%"
-													></div>
-												</div>
-											</div>
-										</div>
-									</td>
+									<th scope="row">s5</th>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
+									<td th:text="${qtableDTO10.maxQ}"></td>
+									<td th:text="${qtableDTO11.maxQ}"></td>
+								</tr>
+								<tr>
+									<th scope="row">s6</th>
+									<td>-</td>
+									<td th:text="${qtableDTO12.maxQ}"></td>
+									<td th:text="${qtableDTO13.maxQ}"></td>
+									<td>-</td>
+									<td>-</td>
 								</tr>
 							</tbody>
 						</table>
@@ -507,58 +441,11 @@
 		<!-- Footer -->
 		<footer class="footer">
 			<div class="row align-items-center justify-content-xl-between">
-				<div class="col-xl-6">
-					<div class="copyright text-center text-xl-left text-muted">
-						&copy; 2023
-						<a
-							href="index.html"
-							class="font-weight-bold ml-1"
-							target="_blank"
-						>medITech</a
-						>
-					</div>
-				</div>
-				<div class="col-xl-6">
-					<ul
-						class="nav nav-footer justify-content-center justify-content-xl-end"
-					>
-						<li class="nav-item">
-							<a
-								href="https://www.creative-tim.com"
-								class="nav-link"
-								target="_blank"
-							>Creative Tim</a
-							>
-						</li>
-						<li class="nav-item">
-							<a
-								href="https://www.creative-tim.com/presentation"
-								class="nav-link"
-								target="_blank"
-							>About Us</a
-							>
-						</li>
-						<li class="nav-item">
-							<a
-								href="http://blog.creative-tim.com"
-								class="nav-link"
-								target="_blank"
-							>Blog</a
-							>
-						</li>
-						<li class="nav-item">
-							<a
-								href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
-								class="nav-link"
-								target="_blank"
-							>MIT License</a
-							>
-						</li>
-					</ul>
-				</div>
+
 			</div>
 		</footer>
 	</div>
 </div>
+<script src="/static/js/data.js"></script>
 </body>
 </html>

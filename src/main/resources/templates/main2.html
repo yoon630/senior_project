@@ -482,5 +482,83 @@
           application: "argon-dashboard-free",
         });
     </script>
+    <script th:inline="javascript">
+      $(document).ready(function() {
+        fetchData(1); // 첫 페이지 데이터 로딩
+      });
+
+      // 페이지 링크 클릭 이벤트 처리
+      $(document).on('click', '#pagination .page-link', function(e) {
+        e.preventDefault();
+        const page = $(this).text();
+        fetchData(page);
+        updateActivePage(page); // 현재 페이지 표시 갱신
+      });
+
+      // 데이터 로딩 함수
+      function fetchData(page) {
+        $.ajax({
+          url: /* 서버의 컨트롤러 엔드포인트 URL */,
+          method: 'GET',
+          data: { page: page }, // 페이지 번호를 서버로 전달
+          success: function(data) {
+            $('#dataContainer').html(data); // 데이터를 표시할 영역에 HTML 삽입
+          },
+          error: function() {
+            console.error('Error fetching data');
+          }
+        });
+      }
+
+      // 현재 페이지 표시 갱신 함수
+      function updateActivePage(page) {
+        $('#pagination .page-item').removeClass('active');
+        $('#pagination .page-item a').each(function() {
+          if ($(this).text() === page) {
+            $(this).parent().addClass('active');
+          }
+        });
+      }
+    </script>
+    <!-- 위를 실행하는 컨트롤러 코드 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:inline="javascript">
+      $(document).ready(function() {
+        fetchData(1); // 첫 페이지 데이터 로딩
+      });
+
+      // 페이지 링크 클릭 이벤트 처리
+      $(document).on('click', '#pagination .page-link', function(e) {
+        e.preventDefault();
+        const page = $(this).text();
+        fetchData(page);
+        updateActivePage(page); // 현재 페이지 표시 갱신
+      });
+
+      // 데이터 로딩 함수
+      function fetchData(page) {
+        $.ajax({
+          url: /* 서버의 컨트롤러 엔드포인트 URL */,
+          method: 'GET',
+          data: { page: page }, // 페이지 번호를 서버로 전달
+          success: function(data) {
+            $('#dataContainer').html(data); // 데이터를 표시할 영역에 HTML 삽입
+          },
+          error: function() {
+            console.error('Error fetching data');
+          }
+        });
+      }
+
+      // 현재 페이지 표시 갱신 함수
+      function updateActivePage(page) {
+        $('#pagination .page-item').removeClass('active');
+        $('#pagination .page-item a').each(function() {
+          if ($(this).text() === page) {
+            $(this).parent().addClass('active');
+          }
+        });
+      }
+    </script>
   </body>
 </html>

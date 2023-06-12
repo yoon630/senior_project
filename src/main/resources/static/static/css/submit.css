@@ -20790,4 +20790,10 @@ td {
   border-right: 0;
   width: 100px;
   height: 20px;
+
+}
+
+.popup-name {
+  font-weight: bold;
+  font-size: medium;
 }

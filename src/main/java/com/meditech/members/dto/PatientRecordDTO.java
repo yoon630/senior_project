@@ -67,4 +67,16 @@ public class PatientRecordDTO {
         }
         return patientRecordDTO;
     }
+    public static PatientRecordDTO toDTO(PatientRecordEntity patientRecordEntity) {//entity->dto로 변환
+        //단순히 그냥 id랑, state, action, reward만 넘겨주면 댐
+        PatientRecordDTO patientRecordDTO = new PatientRecordDTO();
+        patientRecordDTO.setPatientId(patientRecordEntity.getId().getPatientEntity().getId());
+        patientRecordDTO.setTurn(patientRecordEntity.getId().getTurn());
+        patientRecordDTO.setState(patientRecordEntity.getState());
+        patientRecordDTO.setAction(patientRecordEntity.getAction());
+        patientRecordDTO.setReward(patientRecordEntity.getReward());
+        patientRecordDTO.setBloodPressure(patientRecordEntity.getBloodPressure());
+        patientRecordDTO.setComment(patientRecordEntity.getComment());
+        return patientRecordDTO;
+    }
 }

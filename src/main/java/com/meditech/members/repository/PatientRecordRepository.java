@@ -14,7 +14,8 @@ import java.util.Optional;
 
 public interface PatientRecordRepository extends JpaRepository<PatientRecordEntity, PatientRecordId> {
     List<PatientRecordEntity> findByIdPatientEntityId(Long id);//id.patientEntity.id
-
+    @Query("SELECT p FROM PatientRecordEntity p WHERE p.id.patientEntity.id = :patientId AND p.id.turn = :turn")
+    PatientRecordEntity findByIdPatientEntityId2(@Param("patientId") Long patientId, @Param("turn") int turn);
 //    @Query(value = "SELECT p.id.turn FROM PatientRecordEntity p WHERE p.id.patientEntity.id = :patientId AND p.visitDate = (SELECT MAX(pr.visitDate) FROM PatientRecordEntity pr WHERE pr.id.patientEntity.id = :patientId)")
 //    Integer findLatestTurnByPatientId(@Param("patientId") Long patientId);
     @Modifying
