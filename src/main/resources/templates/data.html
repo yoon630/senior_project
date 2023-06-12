@@ -255,87 +255,12 @@
 							</div>
 						</div>
 					</div>
-					<div style="width: 100%; height: 500px">
-						<canvas id="myChart"></canvas>
+					<div >
+						<img src="/chart.png"
+						     alt=""
+						     style="width: 100%; height: 600px">
 					</div>
-					<script>
-	                var xAxisData = [${epsilonList[0]}]; // x축 데이터
-	                var y1AxisData = []; // Epsilon 데이터
-	                var y2AxisData = []; // Max Q 데이터
 
-	                var jsonEpsilonList = $(jsonEpsilonList);
-	                jsonEpsilonList.forEach(function(item){
-	                    console.log(item);
-	                });
-
-                function drawChart() {
-                  var context = document
-                    .getElementById("myChart")
-                    .getContext("2d");
-
-                  var myChart = new Chart(context, {
-                    type: "line", // 차트의 형태
-                    data: {
-                      // 차트에 들어갈 데이터
-                      labels: xAxisData, //x축 데이터
-                      datasets: [
-                        {
-                          //데이터
-                          label: "Epsilon", //차트 제목
-                          data: y1AxisData, //${episode_table.epsilon}
-                          yAxisID: "Epsilon", //첫번째 y축 이름
-                          backgroundColor: [
-                            //색상
-                            "rgba(255, 99, 132, 0.2)",
-                          ],
-                          borderColor: [
-                            //경계선 색상
-                            "rgba(237, 231, 126, 1)",
-                          ],
-                          borderWidth: 3, //경계선 굵기
-                        },
-                        {
-                          //데이터
-                          label: "Max Q", //차트 제목
-                          data: y2AxisData,
-                          yAxisID: "max Q", //두번째 y축 이름
-                          backgroundColor: [
-                            //색상
-                            "rgba(255, 99, 132, 0.2)",
-                          ],
-                          borderColor: [
-                            //경계선 색상
-                            "rgba(237, 130, 201, 1)",
-                          ],
-                          borderWidth: 3, //경계선 굵기
-                        },
-                      ],
-                    },
-                    options: {
-                      scales: {
-                        y: [
-                          {
-                            id: "Epsilon",
-                            position: "left",
-                            ticks: {},
-                          },
-                          {
-                            id: "max Q",
-                            position: "right",
-                            type: "exponential",
-                            ticks: {
-                              beginAtZero: true,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  });
-                }
-                window.onload = function () {
-                  fetchDataAndDrawChart();
-                };
-              </script>
 				</div>
 			</div>
 			<div class="col-xl-4">

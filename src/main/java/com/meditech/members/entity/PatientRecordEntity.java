@@ -82,36 +82,36 @@ public class PatientRecordEntity {
         patientRecordEntity1.setFileAttached(0);
         return patientRecordEntity1;
     }
-    public static PatientRecordEntity toPatientRecordEntity(PatientRecordDTO patientRecordDTO, PatientRepository patientRepository) {//dto객체->entity객체로 변환
-
-
-        PatientRecordEntity patientRecordEntity = new PatientRecordEntity();
-
-        Long patientId = patientRecordDTO.getPatientId();
-        PatientEntity patientEntity = patientRepository.findById(patientId).orElse(null);
-        PatientRecordId recordId = new PatientRecordId();
-        recordId.setPatientEntity(patientEntity);
-//        recordId.setTurn(patientRecordDTO.getTurn());
-        patientRecordEntity.setId(recordId);
-
-        LocalDate visitDate = patientRecordDTO.getVisitDate();
-        if (visitDate != null) {
-            Date convertedVisitDate = new Date(visitDate.toString());
-            patientRecordEntity.setVisitDate(convertedVisitDate);
-        } else {
-            patientRecordEntity.setVisitDate(null);
-        }
-        patientRecordEntity.setState(patientRecordDTO.getState());
-        patientRecordEntity.setAction(patientRecordDTO.getAction());
-        patientRecordEntity.setReward(patientRecordDTO.getReward());
-        patientRecordEntity.setBlood(patientRecordDTO.getBlood());
-        patientRecordEntity.setECG(patientRecordDTO.getECG());
-        patientRecordEntity.setBloodPressure(patientRecordDTO.getBloodPressure());
-//        patientRecordEntity.setXRay(patientRecordDTO.getXRay());
-//        patientRecordEntity.setUltraSound(patientRecordDTO.getUltraSound());
-        patientRecordEntity.setComment(patientRecordDTO.getComment());
-        return patientRecordEntity;
-    }
+//    public static PatientRecordEntity toPatientRecordEntity(PatientRecordDTO patientRecordDTO, PatientRepository patientRepository) {//dto객체->entity객체로 변환
+//
+//
+//        PatientRecordEntity patientRecordEntity = new PatientRecordEntity();
+//
+//        Long patientId = patientRecordDTO.getPatientId();
+//        PatientEntity patientEntity = patientRepository.findById(patientId).orElse(null);
+//        PatientRecordId recordId = new PatientRecordId();
+//        recordId.setPatientEntity(patientEntity);
+////        recordId.setTurn(patientRecordDTO.getTurn());
+//        patientRecordEntity.setId(recordId);
+//
+//        LocalDate visitDate = patientRecordDTO.getVisitDate();
+//        if (visitDate != null) {
+//            Date convertedVisitDate = new Date(visitDate.toString());
+//            patientRecordEntity.setVisitDate(convertedVisitDate);
+//        } else {
+//            patientRecordEntity.setVisitDate(null);
+//        }
+//        patientRecordEntity.setState(patientRecordDTO.getState());
+//        patientRecordEntity.setAction(patientRecordDTO.getAction());
+//        patientRecordEntity.setReward(patientRecordDTO.getReward());
+//        patientRecordEntity.setBlood(patientRecordDTO.getBlood());
+//        patientRecordEntity.setECG(patientRecordDTO.getECG());
+//        patientRecordEntity.setBloodPressure(patientRecordDTO.getBloodPressure());
+////        patientRecordEntity.setXRay(patientRecordDTO.getXRay());
+////        patientRecordEntity.setUltraSound(patientRecordDTO.getUltraSound());
+//        patientRecordEntity.setComment(patientRecordDTO.getComment());
+//        return patientRecordEntity;
+//    }
 
     public static PatientRecordEntity toInsertFileEntity(PatientRecordDTO patientRecordDTO, HttpSession session, String x, String u, String x1, String u1) {
         PatientRecordEntity patientRecordEntity1 = new PatientRecordEntity();

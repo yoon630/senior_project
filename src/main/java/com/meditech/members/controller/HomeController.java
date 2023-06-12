@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.meditech.members.dto.*;
 import com.meditech.members.entity.PatientEntity;
 import com.meditech.members.entity.PatientRecordEntity;
+import com.meditech.members.service.ChartService;
 import com.meditech.members.service.MemberService;
 import com.meditech.members.service.QlearningService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -132,8 +134,13 @@ public class HomeController {
         }
         return "submit.html";
     }
+
+    private final ChartService chartService;
     @GetMapping("/select/data")
-    public String dataForm(Model model) throws JsonProcessingException {
+    public String dataForm(Model model) throws IOException {
+
+        chartService.generateGraph();
+
         //model에 그래프로 넘길 값 (episode테이블 값들) 넣어주면댐
         List<QtableDTO> qtableDTOList = memberService.allMaxQ();
         //List<EpisodeDTO> episodeDTOList = memberService.allEpsiode();
@@ -168,6 +175,7 @@ public class HomeController {
         model.addAttribute("jsonS4List", jsonS4List);
         model.addAttribute("jsonS5List", jsonS5List);
         model.addAttribute("jsonS6List", jsonS6List);
+
 
         //model.addAttribute("episodeDTOList", episodeDTOList);//episode에 따른 Qmax 그래프를 위한 데이터
 
