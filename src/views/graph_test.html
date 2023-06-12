@@ -215,7 +215,47 @@
       </nav>
       <!-- 여기서 부터 그래프 보이는 부분  -->
       <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
-        <div class="container-fluid"></div>
+        <div class="container-fluid">
+          <div class="header-body">
+            <!-- Card stats -->
+            <div class="row">
+              <div class="col-xl-3 col-lg-6">
+                <div class="card card-stats mb-4 mb-xl-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">
+                          환자 ID
+                        </h5>
+                        <span
+                          class="h2 font-weight-bold mb-0"
+                          text="${patient.id}"
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6">
+                <div class="card card-stats mb-4 mb-xl-0">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">
+                          Last Q-learning 시점
+                        </h5>
+                        <span
+                          class="h2 font-weight-bold mb-0"
+                          text="{patient_record_table.visit_date} "
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="container-fluid mt--7">
         <div class="row">
@@ -237,7 +277,9 @@
                           class="nav-link py-2 px-3 active"
                           data-toggle="tab"
                         >
-                          <span class="d-none d-md-block">epsilon</span>
+                          <span class="d-none d-md-block" id="epsilon"
+                            >epsilon</span
+                          >
                         </a>
                       </li>
                       <li class="nav-item">
@@ -246,7 +288,7 @@
                           class="nav-link py-2 px-3"
                           data-toggle="tab"
                         >
-                          <span class="d-none d-md-block">Max Q</span>
+                          <span class="d-none d-md-block" id="maxq">Max Q</span>
                         </a>
                       </li>
                     </ul>
@@ -257,93 +299,73 @@
                 <canvas id="myChart"></canvas>
               </div>
               <script type="text/javascript">
-                var xAxisData = []; // x축 데이터
-                var y1AxisData = []; // Epsilon 데이터
-                var y2AxisData = []; // Max Q 데이터
+                const labels = ["1", "2", "3", "4", "5"];
+                const epsilon = [-100.6, -20.6, -50.2, -10.1];
+                const maxq = [5, 15, 25, 35, 45];
 
-                function fetchDataAndDrawChart() {
-                  // 데이터베이스에서 id와 maxQ 값 가져오기
-                  fetch("/test")
-                    .then((response) => response.json())
-                    .then((data) => {
-                      xAxisData = data.map((entry) => entry.id);
-                      y1AxisData = data.map((entry) => entry.epsilon);
-                      y2AxisData = data.map((entry) => entry.s1); //maxQ
+                var ctx = document.getElementById("myChart").getContext("2d");
 
-                      drawChart();
-                    })
-                    .catch((error) => {
-                      console.error("Error fetching data:", error);
-                    });
-                }
-
-                function drawChart() {
-                  var context = document
-                    .getElementById("myChart")
-                    .getContext("2d");
-
-                  var myChart = new Chart(context, {
-                    type: "line", // 차트의 형태
-                    data: {
-                      // 차트에 들어갈 데이터
-                      labels: xAxisData, //x축 데이터
-                      datasets: [
+                var myChart = new Chart(ctx, {
+                  type: "line", // 차트의 형태
+                  data: {
+                    // 차트에 들어갈 데이터
+                    labels: labels, // x축 데이터
+                    datasets: [
+                      {
+                        //데이터
+                        label: "Epsilon", //차트 제목
+                        data: epsilon,
+                        yAxisID: "Epsilon", //첫번째 y축 이름
+                        backgroundColor: [
+                          //색상
+                          "rgba(255, 99, 132, 0.2)",
+                        ],
+                        borderColor: [
+                          //경계선 색상
+                          "rgba(237, 231, 126, 1)",
+                        ],
+                        borderWidth: 3, //경계선 굵기
+                      },
+                      {
+                        //데이터
+                        label: "Max Q", //차트 제목
+                        data: maxq,
+                        yAxisID: "max Q", //두번째 y축 이름
+                        backgroundColor: [
+                          //색상
+                          "rgba(255, 99, 132, 0.2)",
+                        ],
+                        borderColor: [
+                          //경계선 색상
+                          "rgba(237, 130, 201, 1)",
+                        ],
+                        borderWidth: 3, //경계선 굵기
+                      },
+                    ],
+                  },
+                  options: {
+                    scales: {
+                      y: [
                         {
-                          //데이터
-                          label: "Epsilon", //차트 제목
-                          data: y1AxisData, //${episode_table.epsilon}
-                          yAxisID: "Epsilon", //첫번째 y축 이름
-                          backgroundColor: [
-                            //색상
-                            "rgba(255, 99, 132, 0.2)",
-                          ],
-                          borderColor: [
-                            //경계선 색상
-                            "rgba(237, 231, 126, 1)",
-                          ],
-                          borderWidth: 3, //경계선 굵기
+                          id: "Epsilon",
+                          position: "left",
+                          type: "exponential",
+                          ticks: {
+                            // beginAtZero: true,
+                          },
                         },
                         {
-                          //데이터
-                          label: "Max Q", //차트 제목
-                          data: y2AxisData,
-                          yAxisID: "max Q", //두번째 y축 이름
-                          backgroundColor: [
-                            //색상
-                            "rgba(255, 99, 132, 0.2)",
-                          ],
-                          borderColor: [
-                            //경계선 색상
-                            "rgba(237, 130, 201, 1)",
-                          ],
-                          borderWidth: 3, //경계선 굵기
+                          id: "max Q",
+                          position: "right",
+                          type: "exponential",
+                          ticks: {
+                            beginAtZero: true,
+                          },
                         },
                       ],
                     },
-                    options: {
-                      scales: {
-                        y: [
-                          {
-                            id: "Epsilon",
-                            position: "left",
-                            ticks: {},
-                          },
-                          {
-                            id: "max Q",
-                            position: "right",
-                            type: "exponential",
-                            ticks: {
-                              beginAtZero: true,
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  });
-                }
-                window.onload = function () {
-                  fetchDataAndDrawChart();
-                };
+                  },
+                });
               </script>
             </div>
           </div>
@@ -375,7 +397,7 @@
               <div class="card-header border-0">
                 <div class="row align-items-center">
                   <div class="col">
-                    <h3 class="mb-0">현재 학습된 Q-Table</h3>
+                    <h3 class="mb-0">해당 환자 임상시험 History</h3>
                   </div>
                 </div>
               </div>
@@ -384,62 +406,150 @@
                 <table class="table align-items-center table-flush">
                   <thead class="thead-light">
                     <tr>
-                      <th scope="col"></th>
-                      <th scope="col">a1</th>
-                      <th scope="col">a2</th>
-                      <th scope="col">a3</th>
-                      <th scope="col">a4</th>
-                      <th scope="col">a5</th>
+                      <th scope="col">id</th>
+                      <th scope="col">방문회차</th>
+                      <th scope="col">방문날짜</th>
+                      <th scope="col">현재 state</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr th:each="patient:  ${patientRecordList}">
-                      <th scope="row" th:text="${patient.patientId}">s1</th>
-                      <td th:text="${patient.turn}">Row 1, Column 1</td>
-                      <td th:text="${patient.turn}">Row 1, Column 2</td>
-                      <td>-</td>
-                      <td th:text="${patient.turn}">Row 1, Column 4</td>
-                      <td>-</td>
+                      <th scope="row" th:text="${patient.patientId}">
+                        1234567890
+                      </th>
+                      <td th:text="${patient.turn}">1</td>
+                      <td th:text="${patient.visitDate}">2023-05-21</td>
+                      <td th:text="${patient.state}">S1</td>
                     </tr>
-                    <tr th:each="patient:  ${patientRecordList}">
-                      <th scope="row" th:text="${patient.patientId}">s2</th>
-                      <td th:text="${patient.turn}">Row 2, Column 1</td>
-                      <td th:text="${patient.turn}">Row 2, Column 2</td>
-                      <td>-</td>
-                      <td th:text="${patient.turn}">Row 2, Column 4</td>
-                      <td>-</td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="card shadow">
+              <div class="card-header border-0">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="mb-0">임상 시험 진행 상황</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">질병명</th>
+                      <th scope="col">실험 횟수</th>
+                      <th scope="col"></th>
                     </tr>
-                    <tr th:each="patient:  ${patientRecordList}">
-                      <th scope="row" th:text="${patient.patientId}">s3</th>
-                      <td>-</td>
-                      <td>-</td>
-                      <td th:text="${patient.turn}">Row 3, Column 3</td>
-                      <td th:text="${patient.turn}">Row 3, Column 4</td>
-                      <td>-</td>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">COVID 19</th>
+                      <td>300</td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span class="mr-2">70%</span>
+                          <div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-gradient-danger"
+                                role="progressbar"
+                                aria-valuenow="60"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                style="width: 70%"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
-                    <tr th:each="patient:  ${patientRecordList}">
-                      <th scope="row" th:text="${patient.patientId}">s4</th>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td th:text="${patient.turn}">Row 4, Column 4</td>
-                      <td th:text="${patient.turn}">Row 4, Column 5</td>
+                    <tr>
+                      <th scope="row">위염</th>
+                      <td>204</td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span class="mr-2">60%</span>
+                          <div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-gradient-success"
+                                role="progressbar"
+                                aria-valuenow="70"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                style="width: 60%"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
-                    <tr th:each="patient:  ${patientRecordList}">
-                      <th scope="row" th:text="${patient.patientId}">s5</th>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td th:text="${patient.turn}">Row 4, Column 4</td>
-                      <td th:text="${patient.turn}">Row 4, Column 5</td>
+                    <tr>
+                      <th scope="row">갑상선 암</th>
+                      <td>4,800</td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span class="mr-2">80%</span>
+                          <div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-gradient-primary"
+                                role="progressbar"
+                                aria-valuenow="80"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                style="width: 80%"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
-                    <tr th:each="patient:  ${patientRecordList}">
-                      <th scope="row" th:text="${patient.patientId}">s6</th>
-                      <td>-</td>
-                      <td th:text="${patient.turn}">Row 5, Column 2</td>
-                      <td th:text="${patient.turn}">Row 5, Column 3</td>
-                      <td>-</td>
-                      <td>-</td>
+                    <tr>
+                      <th scope="row">관절염</th>
+                      <td>3,678</td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span class="mr-2">55%</span>
+                          <div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-gradient-info"
+                                role="progressbar"
+                                aria-valuenow="75"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                style="width: 55%"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">장염</th>
+                      <td>2450</td>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <span class="mr-2">90%</span>
+                          <div>
+                            <div class="progress">
+                              <div
+                                class="progress-bar bg-gradient-warning"
+                                role="progressbar"
+                                aria-valuenow="30"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                style="width: 90%"
+                              ></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -465,6 +575,5 @@
         </footer>
       </div>
     </div>
-    <script src="/src/data.js"></script>
   </body>
 </html>

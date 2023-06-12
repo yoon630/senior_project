@@ -25,4 +25,20 @@ export const loginSql = {
   },
 };
 
+export const epsilon = {
+  getEpsilon: async () => {
+    const [rows] = await promisPool.query(`selct * from episode_table`);
+    return rows;
+  },
+};
+
+export const patientId = {
+  getPatientId : async()=> {
+    const [rows]= await promisPool.query(`select id from episode_table`);
+    return rows;
+  }
+}
 export default loginSql;
+export default epsilon;
+export default patientId;
+

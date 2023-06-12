@@ -196,8 +196,8 @@
                       </th>
                       <td th:text="${patient.turn}"></td>
                       <td th:text="${patient.visitDate}"></td>
-                      <td th:text="${patient.state}"></td>
-                      <td th:text="${patient.action}"></td>
+                      <td id="state" th:text="${patient.state}"></td>
+                      <td id="action" th:text="${patient.action}"></td>
                       <td th:text="${patient.reward}"></td>
                       <td th:text="${patient.blood}"></td>
                       <td th:text="${patient.ECG}"></td>
@@ -207,7 +207,7 @@
                           class="img-size"
                           id="xray-img"
                           th:src="@{${'data:image/png;base64,' + patient.xRay}}"
-                          alt="X-Ray"
+                          alt="파일없음"
                         />
                       </td>
                       <td>
@@ -215,7 +215,7 @@
                           class="img-size"
                           id="xray-img"
                           th:src="@{${'data:image/png;base64,' + patient.ultraSound}}"
-                          alt="UltraSound"
+                          alt="파일없음"
                         />
                       </td>
                       <td th:text="${patient.comment}"></td>

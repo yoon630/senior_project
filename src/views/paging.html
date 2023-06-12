@@ -257,24 +257,20 @@
             <!--  여기는 페이지 넘기는 부분에 대한 거  -->
             <div class="card-footer py-4">
               <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
+                <ul id="pagination" class="pagination justify-content-end mb-0">
                   <li class="page-item disabled">
-                    <a class="page-link"  href="#" tabindex="-1">
+                    <a class="page-link" href="#" tabindex="-1">
                       <i class="fas fa-angle-left"></i>
                       <span class="sr-only">Previous</span>
                     </a>
                   </li>
                   <li class="page-item active">
-                    <a class="page-link" href="main.html">1</a>
+                    <a class="page-link" href="#">1</a>
                   </li>
                   <li class="page-item">
-                    <a class="page-link" href="main.html"
-                      >2 <span class="sr-only">(current)</span></a
-                    >
+                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
                   </li>
-                  <li class="page-item">
-                    <a class="page-link" href="main.html">3</a>
-                  </li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
                   <li class="page-item">
                     <a class="page-link" href="#">
                       <i class="fas fa-angle-right"></i>
@@ -478,6 +474,85 @@
           token: "ee6fab19c5a04ac1a32a645abde4613a",
           application: "argon-dashboard-free",
         });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:inline="javascript">
+      $(document).ready(function() {
+        fetchData(1); // 첫 페이지 데이터 로딩
+      });
+    
+      // 페이지 링크 클릭 이벤트 처리
+      $(document).on('click', '#pagination .page-link', function(e) {
+        e.preventDefault();
+        const page = $(this).text();
+        fetchData(page);
+        updateActivePage(page); // 현재 페이지 표시 갱신
+      });
+    
+      // 데이터 로딩 함수
+      function fetchData(page) {
+        $.ajax({
+          url: /* 서버의 컨트롤러 엔드포인트 URL */,
+          method: 'GET',
+          data: { page: page }, // 페이지 번호를 서버로 전달
+          success: function(data) {
+            $('#dataContainer').html(data); // 데이터를 표시할 영역에 HTML 삽입
+          },
+          error: function() {
+            console.error('Error fetching data');
+          }
+        });
+      }
+    
+      // 현재 페이지 표시 갱신 함수
+      function updateActivePage(page) {
+        $('#pagination .page-item').removeClass('active');
+        $('#pagination .page-item a').each(function() {
+          if ($(this).text() === page) {
+            $(this).parent().addClass('active');
+          }
+        });
+      }
+    </script>
+    <!-- 위를 실행하는 컨트롤러 코드 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:inline="javascript">
+      $(document).ready(function() {
+        fetchData(1); // 첫 페이지 데이터 로딩
+      });
+    
+      // 페이지 링크 클릭 이벤트 처리
+      $(document).on('click', '#pagination .page-link', function(e) {
+        e.preventDefault();
+        const page = $(this).text();
+        fetchData(page);
+        updateActivePage(page); // 현재 페이지 표시 갱신
+      });
+    
+      // 데이터 로딩 함수
+      function fetchData(page) {
+        $.ajax({
+          url: /* 서버의 컨트롤러 엔드포인트 URL */,
+          method: 'GET',
+          data: { page: page }, // 페이지 번호를 서버로 전달
+          success: function(data) {
+            $('#dataContainer').html(data); // 데이터를 표시할 영역에 HTML 삽입
+          },
+          error: function() {
+            console.error('Error fetching data');
+          }
+        });
+      }
+    
+      // 현재 페이지 표시 갱신 함수
+      function updateActivePage(page) {
+        $('#pagination .page-item').removeClass('active');
+        $('#pagination .page-item a').each(function() {
+          if ($(this).text() === page) {
+            $(this).parent().addClass('active');
+          }
+        });
+      }
     </script>
   </body>
 </html>
