@@ -20794,6 +20794,12 @@ td {
 }
 
 .popup-name {
+  text-align: center;
+  font-weight: bold;
+  font-size: medium;
+}
+.popup-action-result {
+  text-align: center;
   font-weight: bold;
   font-size: medium;
 }

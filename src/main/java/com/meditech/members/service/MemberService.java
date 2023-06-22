@@ -143,11 +143,6 @@ public class MemberService {
         return patientRecordDTO;
     }
 
-//    public Double findMaxQ(int state, int action){
-//        Double maxQ = qtableRepository.findMaxQ(state*10+action).orElse(0.0);
-//        return maxQ;
-//    }
-
     public List<QtableDTO> allMaxQ() {
         List<QtableEntity> qtableEntityList = qtableRepository.findAll();
         List<QtableDTO> qtableDTOList = new ArrayList<>();
@@ -157,47 +152,28 @@ public class MemberService {
         return qtableDTOList;
     }
 
-    private final EpisodeRepository episodeRepository;
-//    public List<EpisodeDTO> allEpsiode() {
-//        List<EpisodeEntity> episodeEntityList = episodeRepository.findAll();
-//        List<EpisodeDTO> episodeDTOList = new ArrayList<>();
-//        for(EpisodeEntity episodeEntity: episodeEntityList){
-//            episodeDTOList.add(EpisodeDTO.toEpisodeDTO(episodeEntity));
-//        }
-//        return episodeDTOList;
-//    }
-
-    public List<Double> allEpsilon() {
-        List<Double> epsilonList = episodeRepository.findAllEpsilons();
-        return epsilonList;
-    }
-    public List<Integer> allId() {
-        List<Integer> idList = episodeRepository.findAllId();
-        return idList;
-    }
-    public List<Double> allS1() {
-        List<Double> s1List = episodeRepository.findAllS1();
-        return s1List;
-    }
-    public List<Double> allS2() {
-        List<Double> s2List = episodeRepository.findAllS2();
-        return s2List;
-    }
-    public List<Double> allS3() {
-        List<Double> s3List = episodeRepository.findAllS3();
-        return s3List;
-    }
-    public List<Double> allS4() {
-        List<Double> s4List = episodeRepository.findAllS4();
-        return s4List;
-    }
-    public List<Double> allS5() {
-        List<Double> s5List = episodeRepository.findAllS5();
-        return s5List;
-    }
-    public List<Double> allS6() {
-        List<Double> s6List = episodeRepository.findAllS6();
-        return s6List;
+    public String setActionlist(int state) {
+        if(state==1){
+            return "action1, action2, action4";
+        }
+        else if(state==2){
+            return "action1, action2, action4";
+        }
+        else if(state==3){
+            return "action3, action4";
+        }
+        else if(state==4){
+            return "action4, action5";
+        }
+        else if(state==5){
+            return "action4, action5";
+        }
+        else if(state==6){
+            return "action2, action3";
+        }
+        else{
+            return null;
+        }
     }
 
 }

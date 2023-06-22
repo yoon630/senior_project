@@ -9,7 +9,6 @@ import com.meditech.members.service.ChartService;
 import com.meditech.members.service.MemberService;
 import com.meditech.members.service.QlearningService;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.stereotype.Controller;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -132,6 +131,10 @@ public class HomeController {
             QtableDTO qtableDTO = qtableDTOList.get(i);
             model.addAttribute("qtableDTO" + i, qtableDTO);
         }
+
+        String actionlist=memberService.setActionlist(patientRecordDTO.getState());
+        model.addAttribute("actionlist", actionlist);
+
         return "submit.html";
     }
 
@@ -143,41 +146,11 @@ public class HomeController {
 
         //model에 그래프로 넘길 값 (episode테이블 값들) 넣어주면댐
         List<QtableDTO> qtableDTOList = memberService.allMaxQ();
-        //List<EpisodeDTO> episodeDTOList = memberService.allEpsiode();
-        List<Double> epsilonList = memberService.allEpsilon();
-        List<Integer> idList = memberService.allId();
-        List<Double> s1List = memberService.allS1();
-        List<Double> s2List = memberService.allS2();
-        List<Double> s3List = memberService.allS3();
-        List<Double> s4List = memberService.allS4();
-        List<Double> s5List = memberService.allS5();
-        List<Double> s6List = memberService.allS6();
 
-        ObjectMapper objectMapper = new ObjectMapper();//json형태로 변경
-        String jsonEpsilonList = objectMapper.writeValueAsString(epsilonList);
-        String jsonIdList = objectMapper.writeValueAsString(idList);
-        String jsonS1List = objectMapper.writeValueAsString(s1List);
-        String jsonS2List = objectMapper.writeValueAsString(s2List);
-        String jsonS3List = objectMapper.writeValueAsString(s3List);
-        String jsonS4List = objectMapper.writeValueAsString(s4List);
-        String jsonS5List = objectMapper.writeValueAsString(s5List);
-        String jsonS6List = objectMapper.writeValueAsString(s6List);
         for (int i = 0; i < qtableDTOList.size(); i++) {
             QtableDTO qtableDTO = qtableDTOList.get(i);
             model.addAttribute("qtableDTO" + i, qtableDTO);
         }
-
-        model.addAttribute("jsonEpsilonList", jsonEpsilonList);
-        model.addAttribute("jsonIdList", jsonIdList);
-        model.addAttribute("jsonS1List", jsonS1List);
-        model.addAttribute("jsonS2List", jsonS2List);
-        model.addAttribute("jsonS3List", jsonS3List);
-        model.addAttribute("jsonS4List", jsonS4List);
-        model.addAttribute("jsonS5List", jsonS5List);
-        model.addAttribute("jsonS6List", jsonS6List);
-
-
-        //model.addAttribute("episodeDTOList", episodeDTOList);//episode에 따른 Qmax 그래프를 위한 데이터
 
         return "data";
     }

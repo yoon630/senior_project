@@ -16965,9 +16965,14 @@ textarea[resize="horizontal"] {
 }
 
 .navbar-vertical .navbar-nav .nav-link {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-size: 0.9rem;
+   padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1.3rem;
+}
+.navbar-nav .nav-link {
+   padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1.3rem;
 }
 
 .navbar-vertical .navbar-nav .nav-link.active {
@@ -16985,7 +16990,7 @@ textarea[resize="horizontal"] {
 
 .navbar-vertical .navbar-nav .nav-link > i {
   min-width: 2.25rem;
-  font-size: 0.9375rem;
+  font-size: 1.3rem;
   line-height: 1.5rem;
 }
 
