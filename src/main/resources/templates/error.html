@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Error Message</title>
+	<!-- Favicon -->
+	<link href="/healthcare.png" rel="icon" type="image/png" />
+
+    <style>
+        .popup-container {
+            width: 300px;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-message {
+            margin-bottom: 10px;
+        }
+
+        .popup-close {
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="popup-container">
+	    <div class="popup-message">
+		    잘못된 정보 입력입니다.<br>
+		    환자 ID를 확인해주세요.
+	    </div>
+      <span class="popup-close" onclick="closePopup()">Close</span>
+    </div>
+
+    <script>
+        function closePopup() {
+            var popupContainer = document.querySelector('.popup-container');
+            popupContainer.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -24,11 +24,11 @@
     <link rel="stylesheet" href="/static/css/insert.css"  />
          <script>
           function showPopup() {
-            window.open(
-              "/submit",
-              "a",
-              "width=800, height=500, left=100, top=50, location=no"
-            );
+              window.open(
+                "/submit",
+                "a",
+                "width=800, height=500, left=100, top=50, location=no"
+              );
           }
         </script>
   </head>
@@ -226,19 +226,6 @@
                           onclick="showPopup();"
                       />
                       </a>
-                      <!-- 팝업창 호출 -->
-<!--                      <script>-->
-<!--                        function showPopup() {-->
-<!--                          setTimeout(() => {-->
-<!--                           window.open(-->
-<!--                           "/submit",-->
-<!--                           "a",-->
-<!--                           "width=400, height=300, left=100, top=50, location=no"-->
-<!--                           );-->
-<!--                          }, 2000); // 2초(2000밀리초) 후에 팝업 창 열기-->
-<!--                          console.log("Function called");-->
-<!--                        }-->
-<!--                      </script>-->
 
                   </div>
                 </div>

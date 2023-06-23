@@ -99,43 +99,57 @@ public class HomeController {
     String patientName;
     @PostMapping("/insert")
     public String insert(@ModelAttribute PatientRecordDTO patientRecordDTO, HttpSession session){//환자 상태 입력 페이지에서 동작
+        session.setAttribute("isError",0);//에러창 출력 여부 정보
+
         patientName = memberService.findPatientName(patientRecordDTO.getPatientId());
-//        session.setAttribute("patientName",patientName);
-        patientId = patientRecordDTO.getPatientId();
-        System.out.println("전역으로 설정한 patientID를 insert함수에서: " + patientId);
-        //session.setAttribute("patientId",patientRecordDTO.getPatientId());
-        try {
-            // 예외가 발생할 수 있는 코드
-            System.out.println("Patient ID: " + patientRecordDTO.getPatientId()); // 콘솔 출력
-            patientRecordDTO = memberService.insert(patientRecordDTO, session);
-        } catch (Exception e) {
-            e.printStackTrace(); // 스택 트레이스 출력
+        if(patientName==null){
+            //해당 입력 id가 존재하지 않으면 error 창 띄우고, close 누르면 다시 insert창으로
+            session.setAttribute("isError",1);//에러창 출력
+            return "insert";
         }
-        qtableDTOList =memberService.allMaxQ();
-        qlearningService.qlearning(patientRecordDTO, session);
-        return "insert";//입력
-        //원래 창은 입력 후에도 입력창으로 계속 있어야 함, 결과가 출력되는 팝업창은 별도로 출력되도록 함.
-        //잘 입력한 경우에만 /submit 팝업창도 getmapping되도록 if문아래에 getmapping을 해줘야 하나??
-        //if else로 해서 잘 입력햇으면 insert창으로, 잘못입력했으면 잘못입력했다는 창?(잘못입력햇다는 창에서 ok버튼 누르면 다시 insert창으로 오도록)
+        else {
+            patientId = patientRecordDTO.getPatientId();
+            System.out.println("전역으로 설정한 patientID를 insert함수에서: " + patientId);
+            //session.setAttribute("patientId",patientRecordDTO.getPatientId());
+            try {
+                // 예외가 발생할 수 있는 코드
+                System.out.println("Patient ID: " + patientRecordDTO.getPatientId()); // 콘솔 출력
+                patientRecordDTO = memberService.insert(patientRecordDTO, session);
+            } catch (Exception e) {
+                e.printStackTrace(); // 스택 트레이스 출력
+            }
+            qtableDTOList = memberService.allMaxQ();
+            qlearningService.qlearning(patientRecordDTO, session);
+            return "insert";//입력
+            //원래 창은 입력 후에도 입력창으로 계속 있어야 함, 결과가 출력되는 팝업창은 별도로 출력되도록 함.
+            //잘 입력한 경우에만 /submit 팝업창도 getmapping되도록 if문아래에 getmapping을 해줘야 하나??
+            //if else로 해서 잘 입력햇으면 insert창으로, 잘못입력했으면 잘못입력했다는 창?(잘못입력햇다는 창에서 ok버튼 누르면 다시 insert창으로 오도록)
+        }
     }
     @GetMapping("/submit")//???
     public String showPopup(HttpSession session, Model model) throws InterruptedException {
         Thread.sleep(1000);//getmapping지연시키기
 
-        //큐러닝 결과 선택된 action 가져오기
-        System.out.println("컨트롤러에서 patientId = "+patientId);
-        PatientRecordDTO patientRecordDTO = memberService.findResult(patientId);
-        model.addAttribute("patientName", patientName);
-        model.addAttribute("patientRecordDTO", patientRecordDTO);
-        for (int i = 0; i < qtableDTOList.size(); i++) {
-            QtableDTO qtableDTO = qtableDTOList.get(i);
-            model.addAttribute("qtableDTO" + i, qtableDTO);
+        if(session.getAttribute("isError").equals(1)){
+            return "error";
         }
+        else {
 
-        String actionlist=memberService.setActionlist(patientRecordDTO.getState());
-        model.addAttribute("actionlist", actionlist);
+            //큐러닝 결과 선택된 action 가져오기
+            System.out.println("컨트롤러에서 patientId = " + patientId);
+            PatientRecordDTO patientRecordDTO = memberService.findResult(patientId);
+            model.addAttribute("patientName", patientName);
+            model.addAttribute("patientRecordDTO", patientRecordDTO);
+            for (int i = 0; i < qtableDTOList.size(); i++) {
+                QtableDTO qtableDTO = qtableDTOList.get(i);
+                model.addAttribute("qtableDTO" + i, qtableDTO);
+            }
 
-        return "submit.html";
+            String actionlist = memberService.setActionlist(patientRecordDTO.getState());
+            model.addAttribute("actionlist", actionlist);
+
+            return "submit.html";
+        }
     }
 
     private final ChartService chartService;
@@ -154,5 +168,10 @@ public class HomeController {
 
         return "data";
     }
+
+//    @GetMapping("/submit/error")
+//    public String errorForm(){ //상태 입력 페이지에서 잘못된 정보 입력 시 에러 창 출력
+//        return "error";
+//    }
 
 }
