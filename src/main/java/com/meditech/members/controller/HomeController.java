@@ -46,12 +46,13 @@ public class HomeController {
             return "index";
         }
     }
-    @GetMapping("/main")
+    @GetMapping("/main") //환자 정보 리스트
     public String main(Model model, HttpSession session) {
         List<PatientDTO> patientDTOList = memberService.findAll(session);
         model.addAttribute("patientList", patientDTOList);
         return "main2";
     }
+
     @GetMapping("/patient")//새로운 환자 정보 입력 페이지로
     public String patientForm(){
         return "patient";//새로운 환자 정보 입력 페이지 폼 뜨게
@@ -88,6 +89,16 @@ public class HomeController {
         return "detail";
     }
 
+
+    //환자 정보 리스트에서 해당 환자 정보 삭제 버튼 기능 필요
+    //환자 정보 삭제 시, 참조 관계 고려하여야 함.
+    //해당 환자의 patient_table, patient_record_table 관련 레코드 삭제
+    //하위 테이블부터 삭제되어야 함.
+    @GetMapping("/delete/patient/{id}")
+    public String deletePatient(@PathVariable Long id){//main페이지에서 해당 환자 정보 삭제 처리
+        memberService.deletePatient(id);//해당 환자의 모든 정보 삭제
+        return "redirect:/main";//메인 페이지로 redirect
+    }
     @GetMapping("/insert")
     public String insertForm(){
         return "insert";
@@ -169,9 +180,5 @@ public class HomeController {
         return "data";
     }
 
-//    @GetMapping("/submit/error")
-//    public String errorForm(){ //상태 입력 페이지에서 잘못된 정보 입력 시 에러 창 출력
-//        return "error";
-//    }
 
 }

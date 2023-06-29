@@ -17,4 +17,6 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
     Optional<PatientEntity> findById(Long id);
     @Query("SELECT p.patientName from PatientEntity p WHERE p.id = :id")
     String findNameById(@Param("id") Long id);
+
+    void deleteById(Long id);
 }

@@ -244,6 +244,8 @@
                         <div class="d-flex align-items-center">
                           <span class="mr-2"><button type="button" class="btn btn-sm btn-primary" >
                             <a class="btn-primary" th:href="@{|/select/patient/${patient.id}|}">조회</a></button></span>
+                          <span class="mr-2"><button type="button" class="btn btn-sm btn-primary">
+                            <a class="btn-primary" th:href="@{|/delete/patient/${patient.id}|}" onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a></button></span>
                           <div></div>
                         </div>
                       </td>

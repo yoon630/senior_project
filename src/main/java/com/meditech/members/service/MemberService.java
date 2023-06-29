@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.websocket.Session;
 import java.io.File;
 import java.io.IOException;
@@ -176,4 +177,9 @@ public class MemberService {
         }
     }
 
+    @Transactional //트랜잭션 관리
+    public void deletePatient(Long id) {
+        patientRecordRepository.deleteByIdPatientEntityId(id);//해당 환자의 진료내역 레코드 모두 삭제
+        patientRepository.deleteById(id);//해당 환자의 정보 삭제
+    }
 }

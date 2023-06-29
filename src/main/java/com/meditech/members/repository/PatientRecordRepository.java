@@ -29,4 +29,6 @@ public interface PatientRecordRepository extends JpaRepository<PatientRecordEnti
 
     @Query(value = "SELECT MAX(p.id.turn) FROM PatientRecordEntity p WHERE p.id.patientEntity.id = :patientId")
     Integer findMaxTurn(@Param("patientId") Long patientId);
+
+    void deleteByIdPatientEntityId(Long id);
 }
