@@ -14,6 +14,9 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
       rel="stylesheet"
     />
+    <!--search에서 돋보기 icon-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-eS5gHqJC7sYF0TqFh1l2u76DSlK//9ZxzU4YJ2xv1lL+ThSHKwVKYP0Xb+1gMQ9q" crossorigin="anonymous">
+
 
     <!-- favicon -->
     <link href="/healthcare.png" rel="icon" type="image/png" />
@@ -171,9 +174,27 @@
         <div class="container-fluid">
 
           <!-- Form -->
+          <!--환자이름으로 검색하기 위한 기능-->
           <form
             class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto"
-          ></form>
+            action="/main/search" method="POST"
+          >
+            <div class="form-group mb-0">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"
+                  ><i class="fas fa-search"></i
+                  ></span>
+                </div>
+                <input class="form-control"  name="patientName" placeholder="이름으로 검색하세요." type="text"/>
+                <span class="input-group-text">
+                  <button type="submit" class="btn btn-link">
+                   <i class="fas fa-search"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </form>
           <!-- User -->
           <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
@@ -223,7 +244,7 @@
                       <th scope="col">성명</th>
                       <th scope="col">나이</th>
                       <th scope="col">성별</th>
-                      <th scope="col">상세 조회</th>
+                      <th scope="col">상세 조회/삭제</th>
                     </tr>
                   </thead>
                   <tbody>

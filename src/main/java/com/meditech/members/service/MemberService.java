@@ -182,4 +182,16 @@ public class MemberService {
         patientRecordRepository.deleteByIdPatientEntityId(id);//해당 환자의 진료내역 레코드 모두 삭제
         patientRepository.deleteById(id);//해당 환자의 정보 삭제
     }
+
+    public List<PatientDTO> findSearchAll(HttpSession session, String patientName) {
+        Long Id = (Long) session.getAttribute("loginId");
+        List<PatientEntity> patientEntityList = patientRepository.findByMemberEntity_Id(Id);
+        List<PatientDTO> patientDTOList = new ArrayList<>();
+        for(PatientEntity patientEntity: patientEntityList){//여러개의 entity를 여러개의 dto로 하나씩 담기위해
+            if(patientEntity.getPatientName().equals(patientName)) {//로그인한 의사의 담당 환자 중, 검색 한 이름을 갖는 환자만 list에 저장, 문자열비교는 equals로!! ==는 주소를 비교함
+                patientDTOList.add(PatientDTO.toPatientDTO(patientEntity));
+            }
+        }
+        return patientDTOList;
+    }
 }

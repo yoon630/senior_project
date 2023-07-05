@@ -180,5 +180,10 @@ public class HomeController {
         return "data";
     }
 
-
+    @PostMapping("/main/search")
+    public String mainSearch(@ModelAttribute PatientDTO patientDTO, HttpSession session, Model model){
+        List<PatientDTO> patientDTOList = memberService.findSearchAll(session, patientDTO.getPatientName());
+        model.addAttribute("patientList", patientDTOList);
+        return "main2";
+    }
 }
