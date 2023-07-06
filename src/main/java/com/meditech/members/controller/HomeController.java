@@ -9,6 +9,10 @@ import com.meditech.members.service.ChartService;
 import com.meditech.members.service.MemberService;
 import com.meditech.members.service.QlearningService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,14 +36,24 @@ public class HomeController {
     }
 
     @PostMapping("/")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model) {
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         MemberDTO loginResult = memberService.login(memberDTO);
         if (loginResult != null) {
             // login 성공
             session.setAttribute("loginId", loginResult.getId());//로그인한 id 정보를 세션 저장
             session.setAttribute("loginName", loginResult.getMemberName());
-            List<PatientDTO> patientDTOList = memberService.findAll(session);
-            model.addAttribute("patientList", patientDTOList);
+            //List<PatientDTO> patientDTOList = memberService.findAll(session);
+            Page<PatientEntity> patientEntityList = memberService.findAll(session, pageable);
+
+            int nowPage = patientEntityList.getPageable().getPageNumber()+1;
+            int startPage = Math.max(nowPage-4, 1);
+            int endPage = Math.min(startPage+9, patientEntityList.getTotalPages());
+
+            model.addAttribute("nowPage", nowPage);
+            model.addAttribute("startPage", startPage);
+            model.addAttribute("endPage", endPage);
+
+            model.addAttribute("patientList", patientEntityList);
             return "main2";
         } else {
             // login 실패
@@ -47,9 +61,17 @@ public class HomeController {
         }
     }
     @GetMapping("/main") //환자 정보 리스트
-    public String main(Model model, HttpSession session) {
-        List<PatientDTO> patientDTOList = memberService.findAll(session);
-        model.addAttribute("patientList", patientDTOList);
+    public String main(Model model, HttpSession session, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        Page<PatientEntity> patientEntityList = memberService.findAll(session, pageable);
+        int nowPage = patientEntityList.getPageable().getPageNumber()+1;
+        int startPage = Math.max(nowPage-4, 1);
+        int endPage = Math.min(startPage+9, patientEntityList.getTotalPages());
+
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("patientList", patientEntityList);
         return "main2";
     }
 
@@ -181,9 +203,21 @@ public class HomeController {
     }
 
     @PostMapping("/main/search")
-    public String mainSearch(@ModelAttribute PatientDTO patientDTO, HttpSession session, Model model){
-        List<PatientDTO> patientDTOList = memberService.findSearchAll(session, patientDTO.getPatientName());
-        model.addAttribute("patientList", patientDTOList);
+    public String mainSearch(@ModelAttribute PatientDTO patientDTO, HttpSession session, Model model, @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+//        페이징 기능을 추가하기 전 코드
+//        List<PatientDTO> patientDTOList = memberService.findSearchAll(session, patientDTO.getPatientName());
+//        model.addAttribute("patientList", patientDTOList);
+
+        //페이징 기능 추가 후 변경된 코드
+        Page<PatientEntity> patientEntityList = memberService.findSearchAll(session, patientDTO.getPatientName(), pageable);
+        int nowPage = patientEntityList.getPageable().getPageNumber()+1;
+        int startPage = Math.max(nowPage-4, 1);
+        int endPage = Math.min(startPage+9, patientEntityList.getTotalPages());
+
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("patientList", patientEntityList);
         return "main2";
     }
 }

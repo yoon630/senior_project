@@ -2,6 +2,8 @@ package com.meditech.members.repository;
 
 import com.meditech.members.entity.MemberEntity;
 import com.meditech.members.entity.PatientEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +21,8 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
     String findNameById(@Param("id") Long id);
 
     void deleteById(Long id);
+
+    Page<PatientEntity> findByMemberEntity_Id(Long id, Pageable pageable);
+
+    Page<PatientEntity> findByMemberEntity_IdAndPatientName(Long id, String patientName, Pageable pageable);
 }

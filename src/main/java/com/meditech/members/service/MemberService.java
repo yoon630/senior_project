@@ -4,7 +4,10 @@ import com.meditech.members.dto.*;
 import com.meditech.members.entity.*;
 import com.meditech.members.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,14 +55,15 @@ public class MemberService {
     }
 
     private final PatientRepository patientRepository;
-    public List<PatientDTO> findAll(HttpSession session){
+
+    public Page<PatientEntity> findAll(HttpSession session, Pageable pageable){
         Long Id = (Long) session.getAttribute("loginId");
-        List<PatientEntity> patientEntityList = patientRepository.findByMemberEntity_Id(Id);
-        List<PatientDTO> patientDTOList = new ArrayList<>();
-        for(PatientEntity patientEntity: patientEntityList){//여러개의 entity를 여러개의 dto로 하나씩 담기위해
-            patientDTOList.add(PatientDTO.toPatientDTO(patientEntity));
-        }
-        return patientDTOList;
+//        List<PatientEntity> patientEntityList = patientRepository.findByMemberEntity_Id(Id);
+//        List<PatientDTO> patientDTOList = new ArrayList<>();
+//        for(PatientEntity patientEntity: patientEntityList){//여러개의 entity를 여러개의 dto로 하나씩 담기위해
+//            patientDTOList.add(PatientDTO.toPatientDTO(patientEntity));
+//        }
+        return patientRepository.findByMemberEntity_Id(Id, pageable);
     }
 
     private final PatientRecordRepository patientRecordRepository;
@@ -183,15 +187,15 @@ public class MemberService {
         patientRepository.deleteById(id);//해당 환자의 정보 삭제
     }
 
-    public List<PatientDTO> findSearchAll(HttpSession session, String patientName) {
+    public Page<PatientEntity> findSearchAll(HttpSession session, String patientName, Pageable pageable) {
         Long Id = (Long) session.getAttribute("loginId");
-        List<PatientEntity> patientEntityList = patientRepository.findByMemberEntity_Id(Id);
-        List<PatientDTO> patientDTOList = new ArrayList<>();
-        for(PatientEntity patientEntity: patientEntityList){//여러개의 entity를 여러개의 dto로 하나씩 담기위해
-            if(patientEntity.getPatientName().equals(patientName)) {//로그인한 의사의 담당 환자 중, 검색 한 이름을 갖는 환자만 list에 저장, 문자열비교는 equals로!! ==는 주소를 비교함
-                patientDTOList.add(PatientDTO.toPatientDTO(patientEntity));
-            }
-        }
-        return patientDTOList;
+//        List<PatientEntity> patientEntityList = patientRepository.findByMemberEntity_Id(Id);
+//        List<PatientDTO> patientDTOList = new ArrayList<>();
+//        for(PatientEntity patientEntity: patientEntityList){//여러개의 entity를 여러개의 dto로 하나씩 담기위해
+//            if(patientEntity.getPatientName().equals(patientName)) {//로그인한 의사의 담당 환자 중, 검색 한 이름을 갖는 환자만 list에 저장, 문자열비교는 equals로!! ==는 주소를 비교함
+//                patientDTOList.add(PatientDTO.toPatientDTO(patientEntity));
+//            }
+//        }
+        return patientRepository.findByMemberEntity_IdAndPatientName(Id, patientName, pageable);
     }
 }
