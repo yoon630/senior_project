@@ -29,6 +29,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.jfree:jfreechart:1.5.3'
+	implementation 'org.springframework.boot:spring-boot-starter-security'//spring security 추가
 }
 
 tasks.named('test') {
