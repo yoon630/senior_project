@@ -13,7 +13,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                //로드밸런서 사용안하는데 추가해야되나?
+                .antMatchers("/").permitAll()//로그인 페이지를 제외하고 나머지 페이지는 접근 금지
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
