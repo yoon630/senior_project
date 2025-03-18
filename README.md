@@ -9,9 +9,8 @@
 
 👨‍💻 **팀 구성**  
 - **Frontend 개발**: 1명 [yoon630](https://github.com/yoon630)  
-- **Backend 개발**: 1명  [minseo]
-- **강화학습 개발**: 1명 [hayoung]
-
+- **Backend 개발**: 1명  [minseo0102] (https://github.com/minseo0102)
+- **강화학습 개발**: 1명 [Ha-young-Cho] (https://github.com/Ha-young-Cho)
 ## 💻 사용 기술  
 - **Python**: 강화학습 모델 개발  
 - **Spring Boot**: 백엔드 서버 구축  
